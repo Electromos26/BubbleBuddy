@@ -8,6 +8,7 @@ namespace Player
     public class PlayerController : MonoBehaviour
     {
         [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
+        [field: SerializeField] public PlayerBobber Bobber { get; private set; }
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
 
@@ -31,6 +32,7 @@ namespace Player
         {
             Rb = GetComponent<Rigidbody2D>();
             InputManager = GetComponent<InputManager>();
+            Bobber = GetComponentInChildren<PlayerBobber>();
             mainCamera = Camera.main;
             AttackTimer = new CountdownTimer(PlayerStats.AttackCooldown);
             AttackTimer.Start();
@@ -61,7 +63,9 @@ namespace Player
             Vector2 direction = mousePosition - transform.position;
 
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            pointerArrow.rotation = Quaternion.Euler(0f, 0f, angle);
+            
+            var targetRotation = Quaternion.Euler(0f, 0f, angle);
+            pointerArrow.rotation = Quaternion.Slerp(pointerArrow.rotation, targetRotation, Time.fixedDeltaTime * PlayerStats.ArrowSpeed);
         }
         
         #region State Machine

@@ -31,6 +31,7 @@ namespace Player.States
             // Attack logic
             _attackTimer.Reset(PlayerStats.AttackCooldown);
             _attackTimer.Start();
+            Player.Bobber.Shake();
             Debug.Log("Pew pew");
         }
     }

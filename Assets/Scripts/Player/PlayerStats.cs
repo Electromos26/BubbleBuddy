@@ -14,6 +14,11 @@ namespace Player
         [field: Header("Combat")]
         [field: SerializeField] public float AttackCooldown {get ; private set; }
         [field: SerializeField] public BubbleBullet BubbleBulletPrefab { get; private set; }
+
+        [field: Header("Pointer Arrow")]
+        [field: SerializeField] public float ArrowSpeed { get; private set; }
+        
+        //[field: Header("Health")]
         // public float maxHealth = 10f;
     }
 }

@@ -10,11 +10,12 @@ namespace Player.States
 
         public override void EnterState()
         {
-          
+          Player.Bobber.StartBob();
         }
 
         public override void ExitState()
         {
+            Player.Bobber.StopBob();
         }
 
         public override void UpdateState()
