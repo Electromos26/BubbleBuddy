@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c5616c5d87c3a4a8f9dbf2ecca0295, type: 3}
+  m_Name: PlayerStats
+  m_EditorClassIdentifier: 
+  <Acceleration>k__BackingField: 50
+  <Deceleration>k__BackingField: 2
+  <MaxSpeed>k__BackingField: 10
+  <AttackCooldown>k__BackingField: 0.5
+  <BubbleBulletPrefab>k__BackingField: {fileID: 7186030157639706577, guid: 1a9a81abccb1ade4a9e8dc3df7922738, type: 3}

@@ -7,9 +7,6 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : Menu
 {
         
-    [Header("Sensitivity"),SerializeField]
-    private Slider sensitivitySlider;
-
     private bool IsPaused { get; set; }
     
     private float _initialTimeScale;
