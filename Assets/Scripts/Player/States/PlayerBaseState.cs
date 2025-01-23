@@ -9,10 +9,13 @@ namespace Player.States
             Player = playerController;
             PlayerStats = playerController.PlayerStats;
             Rb = playerController.Rb;
+          
+            InputManager = playerController.InputManager;
         }
         protected PlayerController Player { get; private set; }
-        protected PlayerStats PlayerStats;
-        protected Rigidbody2D Rb;
+        protected readonly PlayerStats PlayerStats;
+        protected readonly Rigidbody2D Rb;
+        protected readonly InputManager InputManager;
 
         public abstract void EnterState();
         public abstract void ExitState();
@@ -21,7 +24,7 @@ namespace Player.States
         public virtual void FixedUpdateState(){}
     
         public virtual void HandleMovement(Vector2 direction) { }
-        public virtual void HandleAttack(bool isHeld) { }
-        public virtual void HandleDash(bool isHeld) { }
+        public virtual void HandleDash() { }
+        public virtual void HandleAttack() { }
     }
 }

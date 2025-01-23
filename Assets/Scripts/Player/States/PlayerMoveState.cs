@@ -19,7 +19,7 @@ namespace Player.States
 
         public override void UpdateState()
         {
-            if (Player.InputManager.Movement == Vector2.zero)
+            if (InputManager.Movement == Vector2.zero)
             {
                 Player.ChangeState(Player.IdleState);
             }
@@ -38,6 +38,11 @@ namespace Player.States
             {
                 Rb.linearVelocity = Rb.linearVelocity.normalized * PlayerStats.MaxSpeed;
             }
+        }
+
+        public override void HandleAttack()
+        {
+            Player.ChangeState(Player.AttackState);
         }
     }
 }

@@ -1,6 +1,10 @@
+using DG.Tweening;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+namespace Enemy
 {
-   
+    public class EnemyBase : MonoBehaviour
+    {
+        protected Tween GetHitTween;
+    }
 }

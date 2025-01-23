@@ -1,44 +1,45 @@
+using System;
 using UnityEngine;
+using Utilities;
 
 public class BubbleBullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
+    [SerializeField] private float damage = 10f;
 
 
+    private Vector3 _direction;
     private Rigidbody2D _rb;
-    
-    //private float _damage = 1f;
-    private float _timer;
+    private CountdownTimer _timer;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _timer = new CountdownTimer(lifeTime);
+        _timer.Start();
     }
 
-    private void Start()
+    public void Init(Vector2 dir)
     {
-        _timer = lifeTime;
+        _rb.AddForce(dir * speed, ForceMode2D.Impulse);
     }
 
-    private void Update()
-    {
-        _timer -= Time.deltaTime;
-        if (_timer <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
+    private void OnEnable() => _timer.OnTimerStop += DestroyBullet;
+    private void OnDisable() => _timer.OnTimerStop -= DestroyBullet;
 
-    private void FixedUpdate()
-    {
-        _rb.AddForce(transform.right * speed, ForceMode2D.Impulse);
-    }
+    private void Update() => _timer.Tick(Time.deltaTime);
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("BubbleBullet collided with " + other.name);
-        if (!other.CompareTag("Player"))
-            Destroy(gameObject);
+        var damageable = other.GetComponent<IDamageable>();
+        damageable?.GetDamaged(damage);
+        DestroyBullet();
+    }
+
+    private void DestroyBullet()
+    {
+        //BulletAnimation
+        Destroy(gameObject);
     }
 }

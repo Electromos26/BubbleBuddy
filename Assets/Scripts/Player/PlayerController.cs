@@ -22,18 +22,22 @@ namespace Player
 
 
         private PlayerBaseState CurrentState { get; set; }
-        public Rigidbody2D Rb { get; private set; }
+        private PlayerAnimator Animator { get; set; }
         public InputManager InputManager { get; private set; }
+        public Rigidbody2D Rb { get; private set; }
         public CountdownTimer AttackTimer { get; private set; }
 
-        private Camera mainCamera;
+        private Camera _mainCamera;
+        private Vector2 _direction;
 
         private void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
             InputManager = GetComponent<InputManager>();
             Bobber = GetComponentInChildren<PlayerBobber>();
-            mainCamera = Camera.main;
+            Animator = GetComponentInChildren<PlayerAnimator>();
+
+            _mainCamera = Camera.main;
             AttackTimer = new CountdownTimer(PlayerStats.AttackCooldown);
             AttackTimer.Start();
 
@@ -41,12 +45,9 @@ namespace Player
             ChangeState(IdleState);
         }
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
+            Animator.HandlePlayerAnimation(InputManager.Movement);
             CurrentState.UpdateState();
             AttackTimer?.Tick(Time.deltaTime);
         }
@@ -59,15 +60,28 @@ namespace Player
 
         private void SetPointerArrow(Vector2 mouseInput)
         {
-            var mousePosition = mainCamera.ScreenToWorldPoint(new Vector3(mouseInput.x, mouseInput.y, 0f));
-            Vector2 direction = mousePosition - transform.position;
+            var mousePosition = _mainCamera.ScreenToWorldPoint(new Vector3(mouseInput.x, mouseInput.y, 0f));
+            _direction = mousePosition - transform.position;
 
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            
+            var angle = Mathf.Atan2(_direction.y, _direction.x) * Mathf.Rad2Deg;
+
             var targetRotation = Quaternion.Euler(0f, 0f, angle);
-            pointerArrow.rotation = Quaternion.Slerp(pointerArrow.rotation, targetRotation, Time.fixedDeltaTime * PlayerStats.ArrowSpeed);
+            pointerArrow.rotation = Quaternion.Slerp(pointerArrow.rotation, targetRotation,
+                Time.fixedDeltaTime * PlayerStats.ArrowSpeed);
         }
-        
+
+        public void SpawnBullet()
+        {
+            if (!PlayerStats.BubbleBulletPrefab)
+            {
+                Debug.LogError("PlayerStats.BubbleBulletPrefab is null");
+                return;
+            }
+
+            var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
+            bubble.Init(_direction);
+        }
+
         #region State Machine
 
         private void InitStates()
@@ -79,7 +93,7 @@ namespace Player
 
         public void HandleAttack()
         {
-            ChangeState(AttackState);
+            CurrentState.HandleAttack();
         }
 
         public void ChangeState(PlayerBaseState newState)

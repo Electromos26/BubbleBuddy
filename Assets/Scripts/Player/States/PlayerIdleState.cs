@@ -35,5 +35,10 @@ namespace Player.States
         {
             Rb.AddForce(Rb.linearVelocity * -PlayerStats.Deceleration, ForceMode2D.Force);   
         }
+        
+        public override void HandleAttack()
+        {
+            Player.ChangeState(Player.AttackState);
+        }
     }
 }

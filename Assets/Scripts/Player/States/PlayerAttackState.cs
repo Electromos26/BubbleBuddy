@@ -7,14 +7,17 @@ namespace Player.States
     {
         public PlayerAttackState(PlayerController playerController) : base(playerController)
         {
-            _attackTimer = playerController.AttackTimer;
+            _cooldownTimer = playerController.AttackTimer;
         }
 
-        private readonly CountdownTimer _attackTimer;
+        private readonly CountdownTimer _cooldownTimer;
 
+        /// <summary>
+        /// if cooldown is finished fire bubble and rest timer 
+        /// </summary>
         public override void EnterState()
         {
-            if (_attackTimer.IsFinished)
+            if (_cooldownTimer.IsFinished)
             {
                 FireBubble();
             }
@@ -24,15 +27,17 @@ namespace Player.States
 
         public override void ExitState()
         {
+            
         }
 
         private void FireBubble()
         {
-            // Attack logic
-            _attackTimer.Reset(PlayerStats.AttackCooldown);
-            _attackTimer.Start();
-            Player.Bobber.Shake();
-            Debug.Log("Pew pew");
+            _cooldownTimer.Reset(PlayerStats.AttackCooldown);//timer logic 
+            _cooldownTimer.Start();
+
+            Player.Bobber.Shake(); //Shoot Effect on player
+
+            Player.SpawnBullet();
         }
     }
 }
