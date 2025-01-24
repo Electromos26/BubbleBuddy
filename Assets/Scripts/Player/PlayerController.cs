@@ -22,21 +22,20 @@ namespace Player
         public PlayerHurtState HurtState;
 
         //public PlayerDeathState deathState;
-        //public PlayerDashState dashState;
-
 
         private PlayerBaseState CurrentState { get; set; }
         public PlayerAnimator Animator { get; set; }
         public InputManager InputManager { get; private set; }
         public Rigidbody2D Rb { get; private set; }
         public CountdownTimer AttackTimer { get; private set; }
+        public float CurrentSpeed { get; set; }
 
         private Camera _mainCamera;
         private Vector2 _direction;
         private int _currentBullet;
         private int _currentHealth;
         private int _damageTaken;
-    
+
         private void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
@@ -50,23 +49,31 @@ namespace Player
 
             _currentBullet = PlayerStats.MaxBubbleBulletAmount;
             _currentHealth = PlayerStats.MaxHealth;
+
             UIHandler.UpdateAmmoUI(_currentBullet);
             UIHandler.UpdateHealthUI(_currentHealth);
+
+            CurrentSpeed = PlayerStats.MaxSpeed;
+
             InitStates();
             ChangeState(IdleState);
         }
 
         private void Update()
         {
-            Animator.HandleMoveAnimation(InputManager.Movement);
-            CurrentState.UpdateState();
+            if (HasALife())
+                Animator.HandleMoveAnimation(InputManager.Movement);
+
             AttackTimer?.Tick(Time.deltaTime);
+            CurrentState.UpdateState();
         }
 
         private void FixedUpdate()
         {
             CurrentState.FixedUpdateState();
-            SetPointerArrow(InputManager.MousePos);
+            
+            if (HasALife())
+                SetPointerArrow(InputManager.MousePos);
         }
 
         private void SetPointerArrow(Vector2 mouseInput)
@@ -110,14 +117,14 @@ namespace Player
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
             UIHandler.UpdateHealthUI(_currentHealth);
         }
-        
+
         public void TakeDamage(int newDamage)
         {
             _currentHealth -= newDamage;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
             UIHandler.UpdateHealthUI(_currentHealth);
         }
-        
+
 
         private void Refill(int restoreAmount)
         {
@@ -126,17 +133,20 @@ namespace Player
             // Refill health first
             if (_currentHealth < PlayerStats.MaxHealth)
             {
-                int previousHealth = _currentHealth;
+                var previousHealth = _currentHealth;
                 _currentHealth += restoreAmount;
-        
+
                 if (_currentHealth > PlayerStats.MaxHealth)
                 {
                     overflow = _currentHealth - PlayerStats.MaxHealth;
                     _currentHealth = PlayerStats.MaxHealth;
                 }
 
-                int amountGrown = _currentHealth - previousHealth;
+                var amountGrown = _currentHealth - previousHealth;
                 PlayerShrinker.HandleShrink(true, amountGrown);
+                CurrentSpeed = PlayerShrinker.HandleSpeed(true, amountGrown);
+                Debug.Log("Player Speed:" + CurrentSpeed);
+
                 UIHandler.UpdateHealthUI(_currentHealth);
             }
             else
@@ -146,7 +156,7 @@ namespace Player
 
             // Apply remaining points to ammo
             if (overflow <= 0) return;
-            
+
             _currentBullet += overflow;
             _currentBullet = Mathf.Clamp(_currentBullet, 0, PlayerStats.MaxBubbleBulletAmount);
             UIHandler.UpdateAmmoUI(_currentBullet);

@@ -27,7 +27,9 @@ namespace Player.States
                 {
                     Player.TakeDamage(1);
                     FireBubble();
-                    Player.PlayerShrinker.HandleShrink(false);
+                    Player.PlayerShrinker.HandleShrink(false); 
+                    Player.CurrentSpeed = Player.PlayerShrinker.HandleSpeed(false);
+                    Debug.Log("Player Speed:" + Player.CurrentSpeed);
                 }
             }
 

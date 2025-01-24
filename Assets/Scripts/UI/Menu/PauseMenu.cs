@@ -1,53 +1,72 @@
+using System;
+using System.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 
 public class PauseMenu : Menu
 {
         
-    private bool IsPaused { get; set; }
+    [SerializeField] private float duration = 3f;
     
+    private bool IsPaused { get; set; }
     private float _initialTimeScale;
     
+    private Vector3 _startPos;
+    private Vector3 _endPos;
+    
+    private RectTransform _rectTransform;
     
     private void Awake()
     {
+        _rectTransform = GetComponent<RectTransform>();
+        
         IsPaused = false;
-        _currentMenu.gameObject.SetActive(IsPaused);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        currentMenu.gameObject.SetActive(IsPaused);
         
+        _startPos = currentMenu.transform.localPosition;
+        _endPos = Vector3.zero;
+        
+        /*Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;*/
     }
 
-    public void OnTogglePauseMenu()
+    public async void Resume()
     {
-        IsPaused = !IsPaused;
-        _currentMenu.gameObject.SetActive(IsPaused);
-        
-        Cursor.lockState = IsPaused? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = IsPaused;
-
-        if (IsPaused)
+        try
         {
-            _initialTimeScale = Time.timeScale;
-            Time.timeScale = 0; 
+            await AnimateOut();
+            currentMenu.SetActive(false);
+            Time.timeScale = 1f;
         }
-        else
+        catch (Exception e)
         {
-            Time.timeScale = _initialTimeScale;
-           
+            Debug.Log("Pause Menu error: " + e);
         }
-
     }
-    
-    
+
+    private void Pause()
+    {
+        currentMenu.SetActive(true);
+        Time.timeScale = 0f;
+        AnimateIn();
+    }
+
+    private void AnimateIn()
+    {
+        _rectTransform.DOAnchorPos(_endPos, duration).SetUpdate(true);
+    }
+
+    private async Task AnimateOut()
+    {
+        await  _rectTransform.DOAnchorPos(_startPos, duration).SetUpdate(true).AsyncWaitForCompletion();
+    }
+
+
     public void OnLoadMainMenu()
     {
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         SceneManager.LoadScene(0);
     }
 

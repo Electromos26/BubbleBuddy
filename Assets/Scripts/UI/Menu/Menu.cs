@@ -1,19 +1,17 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Menu : MonoBehaviour
 {
-    [Header("Menu Start Up"),SerializeField]
-    protected bool _startActive;
-
+    [Header("Menu Start Up"),SerializeField] protected bool _startActive;
+    
     [Header("Menu Game Objects")]
-    [SerializeField]
-    protected GameObject _currentMenu;
-
+    [SerializeField] protected GameObject currentMenu;
     protected bool _isMusted;
 
     //Menu Management
 
-    public void OnToggleCurrentMenu() => _currentMenu?.SetActive(!_currentMenu.activeSelf);
+    public void OnToggleCurrentMenu() => currentMenu?.SetActive(!currentMenu.activeSelf);
 
     public void OnQuitGame()
     {

@@ -34,9 +34,9 @@ namespace Player.States
         {
             Rb.AddForce(direction * PlayerStats.Acceleration, ForceMode2D.Force);
 
-            if (Rb.linearVelocity.magnitude > PlayerStats.MaxSpeed)
+            if (Rb.linearVelocity.magnitude >  Player.CurrentSpeed)
             {
-                Rb.linearVelocity = Rb.linearVelocity.normalized * PlayerStats.MaxSpeed;
+                Rb.linearVelocity = Rb.linearVelocity.normalized * Player.CurrentSpeed;
             }
         }
 
