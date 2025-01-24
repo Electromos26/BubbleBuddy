@@ -17,7 +17,7 @@ namespace Player.States
         /// </summary>
         public override void EnterState()
         {
-            if (_cooldownTimer.IsFinished)
+            if (_cooldownTimer.IsFinished && Player.HasBubbleBullet())
             {
                 FireBubble();
             }
@@ -36,6 +36,8 @@ namespace Player.States
             _cooldownTimer.Start();
 
             Player.Bobber.Shake(); //Shoot Effect on player
+            
+            Player.PlayerShrinker.HandleShrink(false);
 
             Player.SpawnBullet();
         }

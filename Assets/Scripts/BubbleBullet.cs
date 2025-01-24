@@ -1,17 +1,24 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using Utilities;
 
 public class BubbleBullet : MonoBehaviour
 {
+    [Header("Bullet Stats")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float damage = 10f;
 
+    [Header("Shoot Effect")]
+    [SerializeField] private float shakeDuration = 0.5f;
+    [SerializeField] private float shakeStrength = 0.5f;
+    [SerializeField] private float shakeDelay = 0.2f;
 
     private Vector3 _direction;
     private Rigidbody2D _rb;
     private CountdownTimer _timer;
+    private Tweener _bulletTween;
 
     private void Awake()
     {
@@ -23,6 +30,7 @@ public class BubbleBullet : MonoBehaviour
     public void Init(Vector2 dir)
     {
         _rb.AddForce(dir * speed, ForceMode2D.Impulse);
+        _bulletTween = transform.DOShakeScale(shakeDuration, shakeStrength).SetDelay(shakeDelay);
     }
 
     private void OnEnable() => _timer.OnTimerStop += DestroyBullet;
@@ -40,6 +48,7 @@ public class BubbleBullet : MonoBehaviour
     private void DestroyBullet()
     {
         //BulletAnimation
+        _bulletTween?.Kill();
         Destroy(gameObject);
     }
 }

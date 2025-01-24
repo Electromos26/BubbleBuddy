@@ -15,10 +15,14 @@ namespace Player
         [SerializeField, Range(0.1f, 5f)] private float shakeDuration = 0.75f;
         [SerializeField, Range(0.1f, 5f)] private float shakeStrength = 1f;
         
+        [Header("Shadow Settings")]
+        [SerializeField] private Transform shadow;
+        [SerializeField] private float shadowScale = 0.5f;
 
 
         private Vector3 _startPos;
         private Tween _bobTween;
+        private Tween _shadowTween;
         private Tween _shakeTween;
 
         private void Awake()
@@ -34,13 +38,18 @@ namespace Player
                 .DOLocalMoveY(_startPos.y + bobHeight, bobDuration)
                 .SetEase(ease)
                 .SetLoops(-1, LoopType.Yoyo);
+            _shadowTween = shadow.DOScaleX(shadowScale, bobDuration)
+                .SetEase(ease)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
         public void StopBob()
         {
             _bobTween?.Kill();
+            _shadowTween?.Kill();
 
             transform.DOLocalMove(_startPos, resetDuration).SetEase(Ease.InOutSine);
+            shadow.DOScaleX(1f, bobDuration).SetEase(Ease.InOutSine);
         }
 
         public void Shake()

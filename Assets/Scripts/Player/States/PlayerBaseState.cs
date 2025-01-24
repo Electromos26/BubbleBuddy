@@ -9,7 +9,6 @@ namespace Player.States
             Player = playerController;
             PlayerStats = playerController.PlayerStats;
             Rb = playerController.Rb;
-          
             InputManager = playerController.InputManager;
         }
         protected PlayerController Player { get; private set; }

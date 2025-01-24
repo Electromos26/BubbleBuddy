@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -8,6 +7,8 @@ namespace Player
     {
         [SerializeField] private float tiltAngle = 90f;
         [SerializeField] private float duration = 0.5f;
+        
+        [SerializeField] private Color hitColor = Color.white;
 
         private SpriteRenderer _spriteRenderer;
         private Vector3 _leftRotation;
@@ -22,7 +23,7 @@ namespace Player
             _rightRotation = new Vector3(0f, 0f, -tiltAngle);
         }
 
-        public void HandlePlayerAnimation(Vector2 input)
+        public void HandleMoveAnimation(Vector2 input)
         {
             if (_previousInput == input) return;
 
@@ -39,6 +40,11 @@ namespace Player
             }
 
             _previousInput = input;
+        }
+
+        public void PlayHitEffect()
+        {
+            _spriteRenderer.DOColor(hitColor, duration).SetLoops(1, LoopType.Yoyo);
         }
     }
 }
