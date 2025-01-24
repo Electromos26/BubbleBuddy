@@ -12,7 +12,7 @@ namespace Player
         //public float dashSpeed = 10f;
 
         [field: Header("Health")]
-        [field: SerializeField] public float MaxHealth { get; private set; } = 5;
+        [field: SerializeField] public int MaxHealth { get; private set; } = 5;
         
         [field: Header("Combat")]
         [field: SerializeField] public float AttackCooldown { get; private set; }

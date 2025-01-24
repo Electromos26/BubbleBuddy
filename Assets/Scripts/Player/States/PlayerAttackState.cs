@@ -17,9 +17,18 @@ namespace Player.States
         /// </summary>
         public override void EnterState()
         {
-            if (_cooldownTimer.IsFinished && Player.HasBubbleBullet())
+            if (_cooldownTimer.IsFinished)
             {
-                FireBubble();
+                if (Player.HasBubbleBullet())
+                {
+                    FireBubble();
+                }
+                else if (Player.HasALife())
+                {
+                    Player.TakeDamage(1);
+                    FireBubble();
+                    Player.PlayerShrinker.HandleShrink(false);
+                }
             }
 
             Player.ChangeState(Player.IdleState);
@@ -27,17 +36,14 @@ namespace Player.States
 
         public override void ExitState()
         {
-            
         }
 
         private void FireBubble()
         {
-            _cooldownTimer.Reset(PlayerStats.AttackCooldown);//timer logic 
+            _cooldownTimer.Reset(PlayerStats.AttackCooldown); //timer logic 
             _cooldownTimer.Start();
 
             Player.Bobber.Shake(); //Shoot Effect on player
-            
-            Player.PlayerShrinker.HandleShrink(false);
 
             Player.SpawnBullet();
         }
