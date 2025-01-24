@@ -126,6 +126,7 @@ namespace Player
             // Refill health first
             if (_currentHealth < PlayerStats.MaxHealth)
             {
+                int previousHealth = _currentHealth;
                 _currentHealth += restoreAmount;
         
                 if (_currentHealth > PlayerStats.MaxHealth)
@@ -134,7 +135,8 @@ namespace Player
                     _currentHealth = PlayerStats.MaxHealth;
                 }
 
-                PlayerShrinker.HandleShrink(true);
+                int amountGrown = _currentHealth - previousHealth;
+                PlayerShrinker.HandleShrink(true, amountGrown);
                 UIHandler.UpdateHealthUI(_currentHealth);
             }
             else

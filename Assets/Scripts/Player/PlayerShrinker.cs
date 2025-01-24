@@ -18,9 +18,9 @@ namespace Player
             _currentSize = ShrinkSizes.Length - 1;
         }
 
-        public void HandleShrink(bool grow)
+        public void HandleShrink(bool grow, int growAmount = 1)
         {
-            _currentSize += grow ? 1 : -1;
+            _currentSize += grow ? growAmount : -growAmount;
             _currentSize = Mathf.Clamp(_currentSize, 0, ShrinkSizes.Length - 1);
 
             _srinkTween?.Kill();

@@ -26688,10 +26688,6 @@ PrefabInstance:
       propertyPath: <UIHandler>k__BackingField
       value: 
       objectReference: {fileID: 1851037765}
-    - target: {fileID: 8475328359091977456, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
-      propertyPath: <PlayerShrinker>k__BackingField
-      value: 
-      objectReference: {fileID: 9188375311471646057}
     - target: {fileID: 8577373631386798068, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -26735,35 +26731,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 108708291722876599, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9188375311471646057}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
---- !u!1 &9188375311471646056 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 108708291722876599, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
-  m_PrefabInstance: {fileID: 9188375311471646055}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &9188375311471646057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9188375311471646056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedc9d8a91364cd4983d6b780881692b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.5
-  ease: 31
-  <ShrinkSizes>k__BackingField:
-  - 0.25
-  - 0.5
-  - 0.75
-  - 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

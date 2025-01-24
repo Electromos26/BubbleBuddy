@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2180701474628386285}
+  - component: {fileID: 2275768173455875248}
   m_Layer: 3
   m_Name: Shrinker
   m_TagString: Untagged
@@ -32,6 +33,26 @@ Transform:
   - {fileID: 7683277006771036450}
   m_Father: {fileID: 8577373631386798068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2275768173455875248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108708291722876599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc9d8a91364cd4983d6b780881692b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  ease: 31
+  <ShrinkSizes>k__BackingField:
+  - 0.3
+  - 0.5
+  - 0.75
+  - 0.8
+  - 1
 --- !u!1 &2236716863109483320
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +239,7 @@ MonoBehaviour:
   <PlayerStats>k__BackingField: {fileID: 11400000, guid: 0a5af43b98081594c8096b73b41cabf8, type: 2}
   <Bobber>k__BackingField: {fileID: 1756706148571269630}
   <UIHandler>k__BackingField: {fileID: 0}
+  <PlayerShrinker>k__BackingField: {fileID: 2275768173455875248}
   pointerArrow: {fileID: 6058149077252163340}
   bubbleSpawnPoint: {fileID: 360347801398695537}
 --- !u!114 &3953634818846090147
