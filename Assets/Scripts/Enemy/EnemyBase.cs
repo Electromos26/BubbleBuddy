@@ -116,7 +116,7 @@ namespace Enemy
                 if (_currentHealth <= 0)
                 {
 
-                    EventManager.Instance.OnEnemyDied?.Invoke(Points);
+                    EventManager.Instance.OnEnemyDied?.Invoke(this);
                     ChangeState(DeathState);
                 }
                 else

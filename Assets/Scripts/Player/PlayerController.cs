@@ -47,15 +47,13 @@ namespace Player
             AttackTimer.Start();
 
             _currentHealth = PlayerStats.MaxHealth;
-           EventManager.Instance.OnPlayerHealthChange(_currentHealth);
 
             CurrentSpeed = PlayerStats.MaxSpeed;
 
             InitStates();
             ChangeState(IdleState);
         }
-
-
+        
         private void Update()
         {
             if (!HasDied())

@@ -6,14 +6,13 @@ namespace Enemy
 {
     public class PlayerDetector : MonoBehaviour
     {
-        [SerializeField] private CircleCollider2D attackCollider;
-        [SerializeField] private float offset = 1f;
+        [SerializeField] private Collider2D attackCollider;
+        [SerializeField] private float attackRange;
 
         public PlayerController Player { get; private set; }
         public bool PlayerInRange { get; set; }
 
         private Transform _playerTransform;
-        private float _attackRadius;
 
         private void Awake()
         {
@@ -24,7 +23,6 @@ namespace Enemy
 
             Player = EnemyManager.Instance.Player;
             _playerTransform = EnemyManager.Instance.Player.transform;
-            _attackRadius = attackCollider.radius;
         }
 
         public Vector3 GetPlayerDirection()
@@ -34,7 +32,7 @@ namespace Enemy
 
         public bool CanAttack()
         {
-            return Vector3.Distance(transform.position, _playerTransform.position) < _attackRadius + offset;
+            return Vector3.Distance(transform.position, _playerTransform.position) < attackRange;
         }
 
 

@@ -23,7 +23,6 @@ namespace Enemy.States
             {
                 Enemy.AttackPlayer();
             } 
-
         }
     }
 }
