@@ -163,12 +163,11 @@ MonoBehaviour:
   maxHealth: 2
   speed: 7
   <Points>k__BackingField: 100
-  DeathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
+  deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 10
   scaleStrength: 1
   duration: 2
-  explodeSprite: {fileID: -1078504248083186730, guid: 77b1b6e8d5272b94bb4c0a20c4f2b962, type: 3}
 --- !u!114 &4192836861328482876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +234,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 3072
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
