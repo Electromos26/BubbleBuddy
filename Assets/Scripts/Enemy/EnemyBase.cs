@@ -79,9 +79,16 @@ namespace Enemy
 
         public virtual void PlayDeathAnimation()
         {
+            transform.DOKill(); // Kill any existing tweens
+    
             if (hitEffect)
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
-            _deathTween = transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash).OnComplete(() => { Destroy(gameObject); });
+    
+            _deathTween = transform.DOScale(Vector3.zero, 0.2f)
+                .SetEase(Ease.Flash)
+                .OnComplete(() => {
+                    Destroy(gameObject);
+                });
         }
 
 

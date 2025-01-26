@@ -10,23 +10,39 @@ namespace Enemy
         [SerializeField] private float duration = 1.5f;
         [SerializeField] private ParticleSystem explodeParticle;
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log($"Pufferfish triggered with: {other.gameObject.name}");
+        }
+
         public override void ChargeUpAttack()
         {
-            _spriteRenderer.transform.DOShakePosition(duration,scaleStrength).OnComplete(() => { ChargeUpFinished = true; });
+            _spriteRenderer.transform.DOShakePosition(duration, scaleStrength)
+                .OnComplete(() => { ChargeUpFinished = true; });
         }
 
         public override void AttackPlayer()
         {
+            // Kill all existing tweens before state change
+            KillAllTweens();
+        
             if (explodeParticle != null)
                 Instantiate(explodeParticle, transform.position, Quaternion.identity);
 
-            if (Detector.PlayerInRange)
+            if (Detector.PlayerInRange && Detector.Player != null)
             {
                 Detector.Player.GetDamaged(damage);
                 Detector.PlayerInRange = false;
             }
 
             ChangeState(DeathState);
+        }
+
+        private void KillAllTweens()
+        {
+            transform.DOKill();
+            if (_spriteRenderer != null && _spriteRenderer.transform != null)
+                _spriteRenderer.transform.DOKill();
         }
     }
 }

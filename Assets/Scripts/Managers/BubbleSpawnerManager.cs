@@ -16,18 +16,42 @@ namespace Managers
     {
         [Header("Spawn Settings")]
         [SerializeField] private List<BubbleType> bubbleTypes = new List<BubbleType>();
-        [SerializeField] private float spawnInterval = 3f;
+        [SerializeField] private float baseSpawnInterval = 3f;
+        [SerializeField] private int maxBubblesOnField = 2;
+        [SerializeField] private float bubbleLifetime = 5f;
         
         [Header("Spawner References")]
         [SerializeField] private List<BubbleSpawner> spawners = new List<BubbleSpawner>();
         
         private float spawnTimer;
         private int currentSpawnerIndex;
+        private List<GameObject> activeBubbles = new List<GameObject>();
 
         private void Start()
         {
             ValidateSpawnChances();
-            spawnTimer = spawnInterval;
+            spawnTimer = baseSpawnInterval;
+        }
+
+        private void Update()
+        {
+            if (spawners.Count == 0 || bubbleTypes.Count == 0) return;
+            
+            CleanupExpiredBubbles();
+
+            if (activeBubbles.Count >= maxBubblesOnField) return;
+
+            spawnTimer -= Time.deltaTime;
+            if (spawnTimer <= 0f)
+            {
+                SpawnBubble();
+                spawnTimer = baseSpawnInterval;
+            }
+        }
+
+        private void CleanupExpiredBubbles()
+        {
+            activeBubbles.RemoveAll(bubble => bubble == null);
         }
 
         private void ValidateSpawnChances()
@@ -35,7 +59,6 @@ namespace Managers
             float totalChance = bubbleTypes.Sum(type => type.spawnChance);
             if (totalChance == 0) return;
             
-            // Normalize chances if they exceed 100%
             if (totalChance > 100)
             {
                 float multiplier = 100f / totalChance;
@@ -63,18 +86,6 @@ namespace Managers
             return bubbleTypes.FirstOrDefault()?.prefab;
         }
 
-        private void Update()
-        {
-            if (spawners.Count == 0 || bubbleTypes.Count == 0) return;
-
-            spawnTimer -= Time.deltaTime;
-            if (spawnTimer <= 0f)
-            {
-                SpawnBubble();
-                spawnTimer = spawnInterval;
-            }
-        }
-
         private void SpawnBubble()
         {
             GameObject selectedPrefab = SelectBubblePrefab();
@@ -85,7 +96,12 @@ namespace Managers
             {
                 if (spawners[currentSpawnerIndex].CanSpawn())
                 {
-                    spawners[currentSpawnerIndex].SpawnBubble(selectedPrefab);
+                    GameObject bubble = spawners[currentSpawnerIndex].SpawnBubble(selectedPrefab);
+                    if (bubble != null)
+                    {
+                        activeBubbles.Add(bubble);
+                        Destroy(bubble, bubbleLifetime);
+                    }
                     break;
                 }
                 

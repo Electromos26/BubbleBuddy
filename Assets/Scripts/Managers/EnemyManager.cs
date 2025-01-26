@@ -1,84 +1,166 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
-using Player;
-using UnityEngine;
+using System.Linq;
 using Utils;
 using Enemy;
-using Random = UnityEngine.Random;
+using Player;
 
 namespace Managers
 {
+    [Serializable]
+    public class EnemyType
+    {
+        public EnemyBase prefab;
+        [Range(0, 100)] public float spawnWeight;
+        public int minWaveToAppear = 1;
+    }
+
     public class EnemyManager : Singleton<EnemyManager>
     {
-        public GameEvent Event;
-        [field: SerializeField] public PlayerController Player { get; set; }
-        public List<EnemyBase> EnemiesAlive { get; private set; } = new();
-
-        [SerializeField] private int maxEnemiesSpawned = 4;
-
-        public List<Transform> spawnPoints;
-
-        [SerializeField] private List<EnemyBase> enemyPrefabs;
+        public event Action<EnemyBase> OnEnemyDied;
+        
+        [Header("References")]
+        [SerializeField] public PlayerController Player { get; private set; }
+        [SerializeField] private WaveManager waveManager;
+        
+        [Header("Enemy Types")]
+        [SerializeField] private List<EnemyType> enemyTypes = new List<EnemyType>();
         
         [Header("Spawn Settings")]
+        [SerializeField] private float initialSpawnInterval = 4.5f;
+        [SerializeField] private float minimumSpawnInterval = 1.5f;
+        [SerializeField] private float spawnIntervalDecreaseRate = 30f;
         [SerializeField] private float spawnRadius = 2f;
-        [SerializeField] private float cooldownTime = 1f;
-
-        [Header("Gizmo Settings")]
-        [SerializeField] private Color gizmoColor = Color.yellow;
-        [SerializeField] private bool showGizmo = true;
         
-        private float enemyPerWave;
+        [Header("Spawn Points")]
+        [SerializeField] private List<Transform> spawnPoints;
 
-        private void OnEnable()
-        {
-            Event.OnEnemyDied += RemoveEnemy;
-        }
+        private float currentSpawnInterval;
+        private float spawnTimer;
+        private List<EnemyBase> activeEnemies = new List<EnemyBase>();
 
-        public void SpawnEnemy()
+        private void Start()
         {
-            for (int i = 0; i < maxEnemiesSpawned; i++)
+            currentSpawnInterval = initialSpawnInterval;
+            ValidateEnemyWeights();
+            
+            if (waveManager != null)
             {
-                var enemySpawned = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Count)],
-                    spawnPoints[Random.Range(0, spawnPoints.Count)].position, Quaternion.identity);
-                EnemiesAlive.Add(enemySpawned);
+                waveManager.OnWaveStart += OnWaveStart;
             }
         }
-    
 
-        private float lastSpawnTime;
-        
-        public bool CanSpawn()
+        private void ValidateEnemyWeights()
         {
-            return maxEnemiesSpawned > EnemiesAlive.Count;
+            float totalWeight = enemyTypes.Sum(type => type.spawnWeight);
+            if (totalWeight == 0) return;
+            
+            if (totalWeight != 100)
+            {
+                float multiplier = 100f / totalWeight;
+                foreach (var type in enemyTypes)
+                {
+                    type.spawnWeight *= multiplier;
+                }
+            }
         }
 
-        public void SpawnBubble(GameObject bubblePrefab)
+        private void Update()
         {
-            if (!CanSpawn()) return;
+            if (!waveManager.IsWaveActive()) return;
+            
+            UpdateDifficulty();
+            
+            if (activeEnemies.Count >= waveManager.GetMaxEnemiesForCurrentWave()) return;
 
-            //enemyPrefabs[Random.Range(0, enemyPrefabs.Count);
-            // Generate random point within circle
-            Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
-            Vector3 spawnPosition = transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
-
-            // Spawn the bubble
-            Instantiate(bubblePrefab, spawnPosition, Quaternion.identity);
-            lastSpawnTime = Time.time;
+            spawnTimer -= Time.deltaTime;
+            if (spawnTimer <= 0)
+            {
+                SpawnEnemy();
+                spawnTimer = currentSpawnInterval;
+            }
         }
 
-        private void OnDrawGizmos()
+        private void UpdateDifficulty()
         {
-            if (!showGizmo) return;
-        
-            Gizmos.color = gizmoColor;
-            Gizmos.DrawWireSphere(transform.position, spawnRadius);
+            // Spawn Interval formula: max(5 - (Time/30), 1.5)
+            currentSpawnInterval = Mathf.Max(5 - (waveManager.GameTime / spawnIntervalDecreaseRate), minimumSpawnInterval);
+        }
+
+        private EnemyBase SelectEnemyPrefab()
+        {
+            int currentWave = waveManager.GetCurrentWave();
+            var availableEnemies = enemyTypes.Where(e => e.minWaveToAppear <= currentWave).ToList();
+            
+            if (availableEnemies.Count == 0) return null;
+
+            float roll = UnityEngine.Random.Range(0f, 100f);
+            float currentTotal = 0;
+
+            foreach (var enemyType in availableEnemies)
+            {
+                currentTotal += enemyType.spawnWeight;
+                if (roll <= currentTotal)
+                {
+                    return enemyType.prefab;
+                }
+            }
+
+            return availableEnemies[0].prefab;
+        }
+
+        private void SpawnEnemy()
+        {
+            if (spawnPoints.Count == 0) return;
+
+            var enemyPrefab = SelectEnemyPrefab();
+            if (enemyPrefab == null) return;
+
+            Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
+            Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * spawnRadius;
+            Vector3 spawnPosition = spawnPoint.position + new Vector3(randomOffset.x, 0, randomOffset.y);
+
+            var enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            activeEnemies.Add(enemy);
+        }
+
+        private void OnWaveStart(int waveNumber)
+        {
+            foreach (var enemy in activeEnemies.ToList())
+            {
+                if (enemy != null)
+                {
+                    Destroy(enemy.gameObject);
+                }
+            }
+            activeEnemies.Clear();
+            spawnTimer = currentSpawnInterval;
         }
 
         public void RemoveEnemy(EnemyBase enemy)
         {
-            EnemiesAlive.Remove(enemy);
-            SpawnEnemy();
+            activeEnemies.Remove(enemy);
+            OnEnemyDied?.Invoke(enemy);
+        }
+
+        public void SetPlayer(PlayerController player)
+        {
+            Player = player;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (spawnPoints == null) return;
+            
+            Gizmos.color = Color.red;
+            foreach (var point in spawnPoints)
+            {
+                if (point != null)
+                {
+                    Gizmos.DrawWireSphere(point.position, spawnRadius);
+                }
+            }
         }
     }
 }

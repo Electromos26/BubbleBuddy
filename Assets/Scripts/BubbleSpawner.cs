@@ -28,17 +28,16 @@ public class BubbleSpawner : MonoBehaviour
         return Time.time - lastSpawnTime >= cooldownTime;
     }
 
-    public void SpawnBubble(GameObject bubblePrefab)
+    public GameObject SpawnBubble(GameObject bubblePrefab)
     {
-        if (!CanSpawn()) return;
+        if (!CanSpawn()) return null;
 
-        // Generate random point within circle
         Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
         Vector3 spawnPosition = transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
 
-        // Spawn the bubble
-        Instantiate(bubblePrefab, spawnPosition, Quaternion.identity);
+        GameObject bubble = Instantiate(bubblePrefab, spawnPosition, Quaternion.identity);
         lastSpawnTime = Time.time;
+        return bubble;
     }
 
     private void OnDrawGizmos()
