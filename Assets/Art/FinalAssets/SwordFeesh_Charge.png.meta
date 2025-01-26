@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 74aab63544258e9498d6283b5426a9e0
+guid: 12b5efcaa5c07d944825de3f90f26108
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3993276577069357798
-    second: TraumaFish_0
+      213: 2972185808495899356
+    second: SwordFeesh_Charge_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TraumaFish_0
+      name: SwordFeesh_Charge_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 168
-        height: 169
+        y: 170
+        width: 554
+        height: 183
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a15a4e54c180598c0800000000000000
-      internalID: -3993276577069357798
+      spriteID: cd2fad9de335f3920800000000000000
+      internalID: 2972185808495899356
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TraumaFish_0: -3993276577069357798
+      SwordFeesh_Charge_0: 2972185808495899356
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
