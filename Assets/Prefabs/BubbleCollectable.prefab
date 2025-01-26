@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314d808b3c7215548a4c3a10122c1c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoverAmount: 3
+  recoverAmount: 1
   bubble: {fileID: 8541857421367150183}
   bobHeight: 0.25
   bobDuration: 1.5
