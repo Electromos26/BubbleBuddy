@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 82111da4526540645a6f7b32947ca8bb
+guid: f500394c579ef03469def01eb6eb68e2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5869650875426114697
-    second: Discord@2x_0
+      213: 4884416716010343538
+    second: Button_Default@2x_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Discord@2x_0
+      name: Button_Default@2x_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2
-        width: 401
-        height: 397
+        y: 0
+        width: 717
+        height: 839
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7737aa6a0afca8ea0800000000000000
-      internalID: -5869650875426114697
+      spriteID: 27cc6ccdf1fe8c340800000000000000
+      internalID: 4884416716010343538
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Discord@2x_0: -5869650875426114697
+      Button_Default@2x_0: 4884416716010343538
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
