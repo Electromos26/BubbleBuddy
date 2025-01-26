@@ -1,15 +1,35 @@
+using System;
+using Managers;
+using Player;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class PlayerUIHandler : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI healthText;
- 
+
+        [Header("Health UI")] [SerializeField] private GameObject[] _heartContainers;
+
+        private int _currentHealth;
+
+        private void OnEnable()
+        {
+            EventManager.Instance.OnPlayerHealthChange += UpdateHealthUI;
+        }
+
         public void UpdateHealthUI(float playerHealth)
         {
-            healthText.text = playerHealth.ToString();
+            int newHealth = Mathf.Clamp(Mathf.RoundToInt(playerHealth), 0, _heartContainers.Length);
+            
+            if (_currentHealth == newHealth) return;
+
+            _currentHealth = newHealth;
+            
+            for (var i = 0; i < _heartContainers.Length; i++)
+            {
+                _heartContainers[i].SetActive(i < _currentHealth);
+            }
         }
     }
 }

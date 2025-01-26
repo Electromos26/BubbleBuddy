@@ -1,3 +1,5 @@
+using System;
+using Managers;
 using UnityEngine;
 using Player.States;
 using UI;
@@ -10,7 +12,6 @@ namespace Player
     {
         [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
         [field: SerializeField] public PlayerBobber Bobber { get; private set; }
-        [field: SerializeField] public PlayerUIHandler UIHandler { get; private set; }
         [field: SerializeField] public PlayerShrinker PlayerShrinker { get; private set; }
 
         [SerializeField] private Transform pointerArrow;
@@ -46,13 +47,14 @@ namespace Player
             AttackTimer.Start();
 
             _currentHealth = PlayerStats.MaxHealth;
-            UIHandler.UpdateHealthUI(_currentHealth);
+           EventManager.Instance.OnPlayerHealthChange(_currentHealth);
 
             CurrentSpeed = PlayerStats.MaxSpeed;
 
             InitStates();
             ChangeState(IdleState);
         }
+
 
         private void Update()
         {
@@ -101,13 +103,7 @@ namespace Player
             var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
             bubble.Init(_direction);
 
-            if (UIHandler == null)
-            {
-                Debug.LogError("PlayerUIHandler is Missing add ref to PlayerController");
-                return;
-            }
-
-            UIHandler.UpdateHealthUI(_currentHealth);
+            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
         }
 
         public void TakeDamage()
@@ -117,14 +113,14 @@ namespace Player
             
             _currentHealth -= _damageTaken;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            UIHandler.UpdateHealthUI(_currentHealth);
+            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
         }
 
         public void TakeDamage(int newDamage)
         {
             _currentHealth -= newDamage;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            UIHandler.UpdateHealthUI(_currentHealth);
+            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
         }
 
 
@@ -141,7 +137,7 @@ namespace Player
                 CurrentSpeed = PlayerShrinker.HandleSpeed(true, _currentHealth);
                 Debug.Log("Player Speed:" + CurrentSpeed);
 
-                UIHandler.UpdateHealthUI(_currentHealth);
+                EventManager.Instance.OnPlayerHealthChange(_currentHealth);
             }
         }
 
@@ -201,5 +197,6 @@ namespace Player
         }
 
         #endregion
+        
     }
 }

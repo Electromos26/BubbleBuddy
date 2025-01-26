@@ -48,8 +48,8 @@ MonoBehaviour:
   duration: 0.5
   ease: 31
   <ShrinkSizes>k__BackingField:
-  - 0.2
-  - 0.3
+  - 0.4
+  - 0.6
   - 0.5
   - 0.75
   - 1
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -6182547431807526705, guid: f6a9b9311855d21429c8b9737b854781, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -487,7 +487,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -4646876343654227710, guid: bb366b54f107f44469388872b4721801, type: 3}
   m_Color: {r: 0.044855822, g: 0.30184764, b: 0.4528302, a: 1}
   m_FlipX: 0
@@ -658,7 +658,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 2ad8cbeb784232943bb1107d04ea8186, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

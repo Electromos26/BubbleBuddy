@@ -4,13 +4,11 @@ namespace Enemy.States
     {
         protected EnemyBaseState(EnemyBase enemy)
         {
-            EnemyBase = enemy;
-            Animator = enemy.Animator;
+            Enemy = enemy;
             Detector = enemy.Detector;
         }
 
-        protected EnemyBase EnemyBase { get; private set; }
-        protected EnemyAnimator Animator { get; private set; }
+        protected EnemyBase Enemy { get; private set; }
         protected PlayerDetector Detector { get; private set; }
         
         public abstract void EnterState();

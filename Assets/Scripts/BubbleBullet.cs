@@ -18,7 +18,8 @@ public class BubbleBullet : MonoBehaviour
     private Vector3 _direction;
     private Rigidbody2D _rb;
     private CountdownTimer _timer;
-    private Tweener _bulletTween;
+    private Tween _bulletTween;
+    private Tween _destroyTween;
 
     private void Awake()
     {
@@ -48,7 +49,13 @@ public class BubbleBullet : MonoBehaviour
     private void DestroyBullet()
     {
         //BulletAnimation
-        _bulletTween?.Kill();
+        //_destroyTween
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        _bulletTween?.Kill();
+        
     }
 }

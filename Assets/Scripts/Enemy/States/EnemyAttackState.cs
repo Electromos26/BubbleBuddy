@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemy.States
 {
     public class EnemyAttackState : EnemyBaseState
@@ -8,12 +10,20 @@ namespace Enemy.States
 
         public override void EnterState()
         {
-            Animator.PlayChargeAnimation();
+            Enemy.ChargeUpAttack();
         }
 
         public override void ExitState()
         {
-        
+        }
+
+        public override void UpdateState()
+        {
+            if (Enemy.ChargeUpFinished && !Enemy.IsAttacking)
+            {
+                Enemy.AttackPlayer();
+            } 
+
         }
     }
 }

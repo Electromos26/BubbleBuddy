@@ -167,7 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   lifeTime: 3
-  damage: 10
+  damage: 1
   shakeDuration: 0.2
   shakeStrength: 0.4
   shakeDelay: 0.25

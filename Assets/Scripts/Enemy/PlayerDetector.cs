@@ -1,31 +1,53 @@
+using Player;
 using UnityEngine;
+using Managers;
 
-public class PlayerDetector : MonoBehaviour
+namespace Enemy
 {
-    [SerializeField] private GameObject player;
-
-    public bool HasDetected { get; private set; }
-    public bool CanAttack { get; private set; }
-    private Transform _playerTransform;
-    private CircleCollider2D _collider;
-    private float _detectionRadius;
-
-    private void Awake()
+    public class PlayerDetector : MonoBehaviour
     {
-        if (player != null)
-            _playerTransform = player.transform;
+        [SerializeField] private CircleCollider2D attackCollider;
+        [SerializeField] private float offset = 1f;
 
-        _collider = GetComponent<CircleCollider2D>();
-        _detectionRadius = _collider.radius;
-    }
+        public PlayerController Player { get; private set; }
+        public bool PlayerInRange { get; set; }
 
-    private bool CanSeePlayer()
-    {
-        return HasDetected = Vector3.Distance(_playerTransform.position, _playerTransform.position) < _detectionRadius;
-    }
+        private Transform _playerTransform;
+        private float _attackRadius;
 
-    private bool IsCloseToAttack()
-    {
-        return CanAttack = Vector3.Distance(_playerTransform.position, _playerTransform.position) < _detectionRadius;
+        private void Awake()
+        {
+            if (EnemyManager.Instance == null)
+            {
+                Debug.LogError("EnemyManager is not in Scene or missing");
+            }
+
+            Player = EnemyManager.Instance.Player;
+            _playerTransform = EnemyManager.Instance.Player.transform;
+            _attackRadius = attackCollider.radius;
+        }
+
+        public Vector3 GetPlayerDirection()
+        {
+            return (_playerTransform.position - transform.position).normalized;
+        }
+
+        public bool CanAttack()
+        {
+            return Vector3.Distance(transform.position, _playerTransform.position) < _attackRadius + offset;
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+                PlayerInRange = true;
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+                PlayerInRange = false;
+        }
     }
 }

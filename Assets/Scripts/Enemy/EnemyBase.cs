@@ -1,38 +1,61 @@
-using System;
 using DG.Tweening;
 using Enemy.States;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Managers;
+using Utilities;
 
 namespace Enemy
 {
-    public class EnemyBase : MonoBehaviour, IDamageable
+    [RequireComponent(typeof(PlayerDetector), typeof(Collider2D))]
+    public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         [SerializeField] protected float damage;
         [SerializeField] protected float maxHealth;
-        [SerializeField] protected Collider2D damageCollider;
+        [SerializeField] protected float speed;
+        [field: SerializeField] public float Points { get; protected set; }
+
+        [Header("Hit Effect")] 
+        [SerializeField] protected ParticleSystem hitEffect;
+
+        [SerializeField] protected float hitDuration, hitStrength;
 
 
-        protected EnemyIdleState IdleState;
-        protected EnemyPatrolState PatrolState;
-        public EnemyAttackState AttackState;
         public EnemyChaseState ChaseState;
-
+        public EnemyAttackState AttackState;
+        public EnemyDeathState DeathState;
+        public EnemyStunState StunState;
+       
         protected EnemyBaseState CurrentState;
-        public EnemyAnimator Animator { get; set; }
+
         public PlayerDetector Detector { get; set; }
+        public CountdownTimer StunTimer{ get; protected set; }
         protected Tween GetHitTween;
+
+        public bool ChargeUpFinished { get; protected set; }
+        public bool IsHit { get; private set; } 
+        public bool IsAttacking { get; set; }
+
+        protected SpriteRenderer _spriteRenderer;
+        protected float _currentHealth;
+
         
-        private float _currentHealth;
+        private Tween _hitTween;
+        private Tween _deathTween;
+        protected Tween ChargeTween;
+        protected Tween AttackTween;
 
         protected virtual void Awake()
         {
-           Init();
-           ChangeState(IdleState);
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            Detector = GetComponent<PlayerDetector>();
+            _currentHealth = maxHealth;
+            
+            Init();
+            
+            ChangeState(ChaseState);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             CurrentState?.UpdateState();
         }
@@ -42,17 +65,30 @@ namespace Enemy
             CurrentState?.FixedUpdateState();
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void FollowPlayer()
         {
-            other.TryGetComponent(out IDamageable damageable);
-            damageable?.GetDamaged(damage);
-            ChangeState(IdleState);
+            transform.position += Detector.GetPlayerDirection() * speed * Time.deltaTime;
+
+            _spriteRenderer.flipX = Detector.GetPlayerDirection().x > 0;
         }
+
+        public abstract void ChargeUpAttack();
+
+        public abstract void AttackPlayer();
+
+        public virtual void PlayDeathAnimation()
+        {
+            if (hitEffect)
+                Instantiate(hitEffect, transform.position, Quaternion.identity);
+            _deathTween = transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash).OnComplete(() => { Destroy(gameObject); });
+        }
+
 
         #region EnemyStates
 
         public void ChangeState(EnemyBaseState newState)
         {
+            if(CurrentState == newState) return;
             CurrentState?.ExitState();
             CurrentState = newState;
             CurrentState.EnterState();
@@ -60,21 +96,42 @@ namespace Enemy
 
         #endregion
 
-        private void Init()
+        protected void Init()
         {
             AttackState = new EnemyAttackState(this);
-            IdleState = new EnemyIdleState(this);
-            PatrolState = new EnemyPatrolState(this); 
+            DeathState = new EnemyDeathState(this);
             ChaseState = new EnemyChaseState(this);
+            StunState = new EnemyStunState(this);
         }
+
         public virtual void GetDamaged(float damage)
         {
             _currentHealth -= damage;
+            
+            IsHit = true;
+
+            _hitTween?.Kill();
+            _hitTween = transform.DOShakeRotation(hitDuration, hitStrength).OnComplete(() =>
+            {
+                if (_currentHealth <= 0)
+                {
+
+                    EventManager.Instance.OnEnemyDied?.Invoke(Points);
+                    ChangeState(DeathState);
+                }
+                else
+                {
+                    IsHit = false;
+                }
+            });
         }
 
-        public void FollowPlayer()
+        private void OnDestroy()
         {
-            //transform.DOMove(_player)
+            _hitTween?.Kill();
+            _deathTween?.Kill();
+            ChargeTween?.Kill();
+            AttackTween?.Kill();
         }
     }
 }

@@ -5,6 +5,16 @@ namespace Enemy
 {
     public class EnemyDummy : EnemyBase
     {
+        public override void ChargeUpAttack()
+        {
+            AttackPlayer();
+        }
+
+        public override void AttackPlayer()
+        {
+            
+        }
+
         public override void GetDamaged(float damage)
         {
             base.GetDamaged(damage);
