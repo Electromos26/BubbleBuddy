@@ -12,7 +12,6 @@ namespace Player.States
         public override void EnterState()
         {
             Player.TakeDamage();
-            Player.Animator.PlayHitEffect();
             CheckPlayerStatus();
         }
 

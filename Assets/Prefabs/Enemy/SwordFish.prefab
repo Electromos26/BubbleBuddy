@@ -162,8 +162,8 @@ MonoBehaviour:
   damage: 1
   maxHealth: 3
   speed: 8
-  <Points>k__BackingField: 0
-  hitEffect: {fileID: 0}
+  <Points>k__BackingField: 200
+  DeathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 50
   stunTime: 3
@@ -171,6 +171,10 @@ MonoBehaviour:
   jumpDistance: 15
   jumpDuration: 0.5
   jumpDelay: 1
+  dash: {fileID: 6741439283810281840, guid: 8149e89a4b6078e429985ebce126d014, type: 3}
+  chargeUp: {fileID: 2972185808495899356, guid: 12b5efcaa5c07d944825de3f90f26108, type: 3}
+  follow: {fileID: 8700532501878500283, guid: 58dd3b64d62452e4c9a966c18a87390f, type: 3}
+  stun: {fileID: -5986512075459692379, guid: 984b4c82232e0f54894072cd585b16f1, type: 3}
 --- !u!114 &6532875549440044825
 MonoBehaviour:
   m_ObjectHideFlags: 0

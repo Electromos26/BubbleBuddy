@@ -16,7 +16,7 @@ namespace Enemy
         [field: SerializeField] public float Points { get; protected set; }
 
         [Header("Hit Effect")] 
-        [SerializeField] protected ParticleSystem hitEffect;
+        [SerializeField] protected ParticleSystem DeathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
 
@@ -79,8 +79,8 @@ namespace Enemy
 
         public virtual void PlayDeathAnimation()
         {
-            if (hitEffect)
-                Instantiate(hitEffect, transform.position, Quaternion.identity);
+            if (DeathEffect)
+                Instantiate(DeathEffect, transform.position, Quaternion.identity);
             _deathTween = transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash).OnComplete(() => { Destroy(gameObject); });
         }
 
@@ -133,6 +133,11 @@ namespace Enemy
             _deathTween?.Kill();
             ChargeTween?.Kill();
             AttackTween?.Kill();
+        }
+
+        public virtual void SetSpriteNormal()
+        {
+            
         }
     }
 }

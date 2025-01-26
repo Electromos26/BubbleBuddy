@@ -2,6 +2,7 @@ using System;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities;
 
 namespace Enemy
@@ -17,7 +18,9 @@ namespace Enemy
         [SerializeField] private float jumpDuration;
         [SerializeField] private float jumpDelay;
 
-
+        
+        [SerializeField] private Sprite dash, chargeUp, follow, stun;
+        
         private Tween _jumpTween;
         private Camera cam;
 
@@ -30,6 +33,7 @@ namespace Enemy
 
         public override void ChargeUpAttack()
         {
+            _spriteRenderer.sprite = chargeUp;
             ChargeUpFinished = true;
         }
 
@@ -79,7 +83,7 @@ namespace Enemy
 
         public override void AttackPlayer()
         {
-            Debug.Log("Ahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+            _spriteRenderer.sprite = dash;
             IsAttacking = true;
             var distance = transform.position + Detector.GetPlayerDirection() * jumpDistance;
             _jumpTween?.Kill();
@@ -89,6 +93,7 @@ namespace Enemy
                 {
                     IsAttacking = false;
                     ChangeState(StunState);
+                    _spriteRenderer.sprite = stun;
                 });
         }
 
@@ -96,6 +101,11 @@ namespace Enemy
         private void OnDestroy()
         {
             _jumpTween?.Kill();
+        }
+
+        public override void SetSpriteNormal()
+        {
+            _spriteRenderer.sprite = follow;
         }
 
         private void OnDrawGizmos()

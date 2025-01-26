@@ -7,8 +7,9 @@ namespace Player
     {
         [SerializeField] private float tiltAngle = 90f;
         [SerializeField] private float duration = 0.5f;
-        
-        [SerializeField] private Color hitColor = Color.white;
+
+        [SerializeField] public ParticleSystem deathEffect;
+
 
         private SpriteRenderer _spriteRenderer;
         private Vector3 _leftRotation;
@@ -45,14 +46,10 @@ namespace Player
         
         public void HandleDeathAnimation()
         {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
             transform.DOScale(Vector3.zero, duration);
             transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
         }
-
-
-        public void PlayHitEffect()
-        {
-            _spriteRenderer.DOColor(hitColor, duration).SetLoops(1, LoopType.Yoyo);
-        }
+        
     }
 }

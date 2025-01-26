@@ -10,6 +10,7 @@ namespace Enemy.States
 
         public override void EnterState()
         {
+            Enemy.SetSpriteNormal();
         }
 
         public override void ExitState()
