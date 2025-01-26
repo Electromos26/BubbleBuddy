@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 
 namespace Enemy
@@ -10,6 +11,8 @@ namespace Enemy
         [SerializeField] private float duration = 1.5f;
         
         [SerializeField] private GameObject explodeEffect;
+        
+        [SerializeField] private AudioClip popSound;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -29,6 +32,8 @@ namespace Enemy
         
             if (explodeEffect)
                 Instantiate(explodeEffect, transform.position, Quaternion.identity);
+            
+            AudioManager.Instance.PlayAudioSfx(popSound);
 
             if (Detector.PlayerInRange && Detector.Player != null)
             {

@@ -169,6 +169,7 @@ MonoBehaviour:
   scaleStrength: 1
   duration: 2
   explodeEffect: {fileID: 2910635792451731281, guid: e3b951bec7f7143bb84123f67cfbbeef, type: 3}
+  popSound: {fileID: 8300000, guid: 9acc132786657e74eacc2b1754addcef, type: 3}
 --- !u!114 &4192836861328482876
 MonoBehaviour:
   m_ObjectHideFlags: 0

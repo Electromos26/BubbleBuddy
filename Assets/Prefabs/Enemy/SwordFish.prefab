@@ -175,6 +175,7 @@ MonoBehaviour:
   chargeUp: {fileID: 2972185808495899356, guid: 12b5efcaa5c07d944825de3f90f26108, type: 3}
   follow: {fileID: 8700532501878500283, guid: 58dd3b64d62452e4c9a966c18a87390f, type: 3}
   stun: {fileID: -5986512075459692379, guid: 984b4c82232e0f54894072cd585b16f1, type: 3}
+  slashSound: {fileID: 8300000, guid: 2c2649b16fa45274fb3e9cf2b997d742, type: 3}
 --- !u!114 &6532875549440044825
 MonoBehaviour:
   m_ObjectHideFlags: 0

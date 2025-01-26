@@ -1,14 +1,18 @@
 using UnityEngine;
 using DG.Tweening;
+using Managers;
 
 namespace Player
 {
     public class PlayerAnimator : MonoBehaviour
     {
+        public GameEvent Event;
         [SerializeField] private float tiltAngle = 90f;
         [SerializeField] private float duration = 0.5f;
 
         [SerializeField] public ParticleSystem deathEffect;
+        
+        [SerializeField] private AudioClip dieSfx;
 
 
         private SpriteRenderer _spriteRenderer;
@@ -46,9 +50,13 @@ namespace Player
         
         public void HandleDeathAnimation()
         {
+            AudioManager.Instance.PlayAudioSfx(dieSfx);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             transform.DOScale(Vector3.zero, duration);
-            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
+            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo).OnComplete(() =>
+            {
+              Event.EndGame?.Invoke();
+            });
         }
         
     }

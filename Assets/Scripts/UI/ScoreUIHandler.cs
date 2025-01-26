@@ -28,6 +28,12 @@ namespace UI
         private void OnEnable()
         {
             Event.OnEnemyDied += SetScore;
+            Event.EndGame += SetScore;
+        }
+
+        public void SetScore()
+        {
+            Event.FinalScore?.Invoke(Score);
         }
 
 

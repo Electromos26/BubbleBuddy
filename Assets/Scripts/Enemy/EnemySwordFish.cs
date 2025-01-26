@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Managers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -20,6 +21,8 @@ namespace Enemy
 
         
         [SerializeField] private Sprite dash, chargeUp, follow, stun;
+
+        [SerializeField] private AudioClip slashSound;
         
         private Tween _jumpTween;
         private Camera cam;
@@ -84,6 +87,7 @@ namespace Enemy
         public override void AttackPlayer()
         {
             _spriteRenderer.sprite = dash;
+            AudioManager.Instance.PlayAudioSfx(slashSound);
             IsAttacking = true;
             var distance = transform.position + Detector.GetPlayerDirection() * jumpDistance;
             _jumpTween?.Kill();
