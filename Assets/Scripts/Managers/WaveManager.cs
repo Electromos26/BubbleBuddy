@@ -6,7 +6,7 @@ using Utils;
 
 namespace Managers
 {
-    public class WaveManager : Singleton<WaveManager>
+    public class WaveManager : MonoBehaviour
     {
         public event Action<int> OnWaveComplete;
         public event Action<int> OnWaveStart;
@@ -45,10 +45,10 @@ namespace Managers
         public void BannerAnimateIn()
         {
             waveText.text = "Wave: " + currentWave.ToString();
-            wavebannerTween?.Kill();
-            wavebannerTween = rectTransform.DOAnchorPos(tweenPos, tweenDuration).SetEase(Ease.InOutSine)
-                .OnComplete(() =>
+            //wavebannerTween?.Kill();
+            wavebannerTween = rectTransform.DOAnchorPosY(0,tweenDuration).SetEase(Ease.InOutSine).OnComplete(() =>
                 {
+                    Debug.Log("Complete");
                     StartNewWave();
                     BannerAnimateOut();
                 });
@@ -56,7 +56,8 @@ namespace Managers
 
         public void BannerAnimateOut()
         {
-            wavebannerTween?.Kill();
+            Debug.Log("Out");
+            //wavebannerTween?.Kill();
             wavebannerTween = rectTransform.DOAnchorPos(waveStartPos, tweenDuration).SetEase(Ease.InOutSine);
         }
         private void Update()
