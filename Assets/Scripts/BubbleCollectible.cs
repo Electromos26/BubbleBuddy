@@ -1,16 +1,13 @@
-using System;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
-using Sequence = DG.Tweening.Sequence;
 
 public class BubbleCollectible : MonoBehaviour, ICollectable
 {
     [Header("Bubble Collectible Properties")] 
     [SerializeField] private int recoverAmount;
 
-    [Header("Bubble Animation")] [SerializeField]
-    private Transform bubble;
+    [Header("Bubble Animation")] 
+    [SerializeField] private Transform bubble;
 
     [SerializeField] private float bobHeight = 0.5f;
     [SerializeField] private float bobDuration = 0.5f;

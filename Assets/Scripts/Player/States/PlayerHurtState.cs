@@ -24,7 +24,7 @@ namespace Player.States
         {
             if (Player.HasDied())
             {
-                //Player.ChangeState(Player.DeathState);
+                Player.ChangeState(Player.DeathState);
             }
             else
             {

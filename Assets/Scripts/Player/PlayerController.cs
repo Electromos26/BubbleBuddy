@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Player.States;
 using UI;
@@ -13,6 +12,7 @@ namespace Player
         [field: SerializeField] public PlayerBobber Bobber { get; private set; }
         [field: SerializeField] public PlayerUIHandler UIHandler { get; private set; }
         [field: SerializeField] public PlayerShrinker PlayerShrinker { get; private set; }
+
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
 
@@ -20,8 +20,7 @@ namespace Player
         public PlayerAttackState AttackState;
         public PlayerIdleState IdleState;
         public PlayerHurtState HurtState;
-
-        //public PlayerDeathState deathState;
+        public PlayerDeathState DeathState;
 
         private PlayerBaseState CurrentState { get; set; }
         public PlayerAnimator Animator { get; set; }
@@ -32,7 +31,6 @@ namespace Player
 
         private Camera _mainCamera;
         private Vector2 _direction;
-        private int _currentBullet;
         private int _currentHealth;
         private int _damageTaken;
 
@@ -47,10 +45,7 @@ namespace Player
             AttackTimer = new CountdownTimer(PlayerStats.AttackCooldown);
             AttackTimer.Start();
 
-            _currentBullet = PlayerStats.MaxBubbleBulletAmount;
             _currentHealth = PlayerStats.MaxHealth;
-
-            UIHandler.UpdateAmmoUI(_currentBullet);
             UIHandler.UpdateHealthUI(_currentHealth);
 
             CurrentSpeed = PlayerStats.MaxSpeed;
@@ -61,7 +56,7 @@ namespace Player
 
         private void Update()
         {
-            if (HasALife())
+            if (!HasDied())
                 Animator.HandleMoveAnimation(InputManager.Movement);
 
             AttackTimer?.Tick(Time.deltaTime);
@@ -71,8 +66,8 @@ namespace Player
         private void FixedUpdate()
         {
             CurrentState.FixedUpdateState();
-            
-            if (HasALife())
+
+            if (!HasDied())
                 SetPointerArrow(InputManager.MousePos);
         }
 
@@ -96,8 +91,12 @@ namespace Player
                 return;
             }
 
-            _currentBullet--;
-            _currentBullet = Mathf.Clamp(_currentBullet, 0, PlayerStats.MaxBubbleBulletAmount);
+            _currentHealth -= 1;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
+
+            PlayerShrinker.HandleShrink(false);
+            CurrentSpeed = PlayerShrinker.HandleSpeed(false);
+            Debug.Log("Player Speed:" + CurrentSpeed);
 
             var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
             bubble.Init(_direction);
@@ -108,11 +107,14 @@ namespace Player
                 return;
             }
 
-            UIHandler.UpdateAmmoUI(_currentBullet);
+            UIHandler.UpdateHealthUI(_currentHealth);
         }
 
         public void TakeDamage()
         {
+            PlayerShrinker.HandleShrink(false);
+            CurrentSpeed = PlayerShrinker.HandleSpeed(false);
+            
             _currentHealth -= _damageTaken;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
             UIHandler.UpdateHealthUI(_currentHealth);
@@ -128,46 +130,25 @@ namespace Player
 
         private void Refill(int restoreAmount)
         {
-            var overflow = 0;
-
             // Refill health first
             if (_currentHealth < PlayerStats.MaxHealth)
             {
-                var previousHealth = _currentHealth;
                 _currentHealth += restoreAmount;
+                _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
 
-                if (_currentHealth > PlayerStats.MaxHealth)
-                {
-                    overflow = _currentHealth - PlayerStats.MaxHealth;
-                    _currentHealth = PlayerStats.MaxHealth;
-                }
 
-                var amountGrown = _currentHealth - previousHealth;
-                PlayerShrinker.HandleShrink(true, amountGrown);
-                CurrentSpeed = PlayerShrinker.HandleSpeed(true, amountGrown);
+                PlayerShrinker.HandleShrink(true, _currentHealth);
+                CurrentSpeed = PlayerShrinker.HandleSpeed(true, _currentHealth);
                 Debug.Log("Player Speed:" + CurrentSpeed);
 
                 UIHandler.UpdateHealthUI(_currentHealth);
             }
-            else
-            {
-                overflow = restoreAmount;
-            }
-
-            // Apply remaining points to ammo
-            if (overflow <= 0) return;
-
-            _currentBullet += overflow;
-            _currentBullet = Mathf.Clamp(_currentBullet, 0, PlayerStats.MaxBubbleBulletAmount);
-            UIHandler.UpdateAmmoUI(_currentBullet);
         }
 
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.TryGetComponent(out ICollectable collectable)) return;
-
-            if (IsFull()) return;
 
             Refill(collectable.RestoreAmount());
             collectable.Collect();
@@ -181,11 +162,13 @@ namespace Player
             AttackState = new PlayerAttackState(this);
             IdleState = new PlayerIdleState(this);
             HurtState = new PlayerHurtState(this);
+            DeathState = new PlayerDeathState(this);
         }
 
         public void HandleAttack()
         {
-            CurrentState.HandleAttack();
+            if (HasALife())
+                CurrentState.HandleAttack();
         }
 
         public void GetDamaged(float damage)
@@ -207,11 +190,6 @@ namespace Player
 
         #region Player Checks
 
-        public bool HasBubbleBullet()
-        {
-            return _currentBullet > 0;
-        }
-
         public bool HasDied()
         {
             return _currentHealth <= 0;
@@ -220,11 +198,6 @@ namespace Player
         public bool HasALife()
         {
             return _currentHealth > 1;
-        }
-
-        private bool IsFull()
-        {
-            return _currentBullet == PlayerStats.MaxBubbleBulletAmount;
         }
 
         #endregion

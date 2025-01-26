@@ -16,6 +16,7 @@ namespace Player
         private Vector2 _previousInput;
         private Tweener _rotateTween;
 
+       
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -41,6 +42,13 @@ namespace Player
 
             _previousInput = input;
         }
+        
+        public void HandleDeathAnimation()
+        {
+            transform.DOScale(Vector3.zero, duration);
+            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
+        }
+
 
         public void PlayHitEffect()
         {

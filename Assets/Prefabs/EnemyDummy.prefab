@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6316722123889368583}
   - component: {fileID: 5148752952434947995}
+  - component: {fileID: 5235978729993204193}
   - component: {fileID: 8437670904468340409}
   - component: {fileID: 5130990867150101072}
   m_Layer: 0
@@ -134,8 +135,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50930113afa63214eae5aa5906850441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  maxHealth: 0
   damageCollider: {fileID: 5130990867150101072}
-  damage: 2
+--- !u!114 &5235978729993204193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6858814246104777067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b060e3b0e993884ea3531cc0fa03222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  detectionRadius: 0
 --- !u!61 &8437670904468340409
 BoxCollider2D:
   m_ObjectHideFlags: 0

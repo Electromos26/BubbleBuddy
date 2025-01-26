@@ -48,11 +48,17 @@ MonoBehaviour:
   duration: 0.5
   ease: 31
   <ShrinkSizes>k__BackingField:
+  - 0.2
   - 0.3
   - 0.5
   - 0.75
-  - 0.8
   - 1
+  <ShrinkSpeeds>k__BackingField:
+  - 15
+  - 14
+  - 13
+  - 12
+  - 10
 --- !u!1 &2236716863109483320
 GameObject:
   m_ObjectHideFlags: 0
