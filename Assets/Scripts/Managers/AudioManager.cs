@@ -31,7 +31,7 @@ namespace Managers
 
         private AudioSource GetAudioSource()
         {
-            if (availableSources[0].isPlaying)
+            if (availableSources.Count == 0)
             {
                 var newAudio = Instantiate(audioSource, Vector3.zero, Quaternion.identity);
                 newAudio.transform.SetParent(transform);

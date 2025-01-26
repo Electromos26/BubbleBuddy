@@ -33,7 +33,7 @@ namespace Enemy
             if (explodeEffect)
                 Instantiate(explodeEffect, transform.position, Quaternion.identity);
             
-            AudioManager.Instance.PlayAudioSfx(popSound);
+          //  AudioManager.Instance.PlayAudioSfx(popSound);
 
             if (Detector.PlayerInRange && Detector.Player != null)
             {

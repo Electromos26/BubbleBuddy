@@ -97,7 +97,7 @@ namespace Player
             _currentHealth -= 1;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
 
-            AudioManager.Instance.PlayAudioSfx(popShoot);
+           // AudioManager.Instance.PlayAudioSfx(popShoot);
             
             PlayerShrinker.HandleShrink(false);
             CurrentSpeed = PlayerShrinker.HandleSpeed(false);
@@ -135,7 +135,7 @@ namespace Player
                 _currentHealth += restoreAmount;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
 
-                AudioManager.Instance.PlayAudioSfx(popShoot);
+              //  AudioManager.Instance.PlayAudioSfx(popShoot);
 
                 PlayerShrinker.HandleShrink(true, _currentHealth);
                 CurrentSpeed = PlayerShrinker.HandleSpeed(true, _currentHealth);

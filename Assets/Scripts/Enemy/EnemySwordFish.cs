@@ -94,7 +94,7 @@ namespace Enemy
                 .SetDelay(jumpDelay)
                 .OnComplete(() =>
                 {
-                    AudioManager.Instance.PlayAudioSfx(slashSound);
+                   // AudioManager.Instance.PlayAudioSfx(slashSound);
                     IsAttacking = false;
                     ChangeState(StunState);
                     _spriteRenderer.sprite = stun;
