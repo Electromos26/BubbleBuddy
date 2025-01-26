@@ -17,7 +17,7 @@ namespace Player
 
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
-
+        
         public PlayerMoveState MoveState;
         public PlayerAttackState AttackState;
         public PlayerIdleState IdleState;
