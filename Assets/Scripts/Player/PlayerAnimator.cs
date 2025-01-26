@@ -13,6 +13,7 @@ namespace Player
         [SerializeField] public ParticleSystem deathEffect;
         
         [SerializeField] private AudioClip dieSfx;
+        
 
 
         private SpriteRenderer _spriteRenderer;

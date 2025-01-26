@@ -19,11 +19,11 @@ namespace Enemy
         [SerializeField] private float jumpDuration;
         [SerializeField] private float jumpDelay;
 
-        
+
         [SerializeField] private Sprite dash, chargeUp, follow, stun;
 
         [SerializeField] private AudioClip slashSound;
-        
+
         private Tween _jumpTween;
         private Camera cam;
 
@@ -87,7 +87,6 @@ namespace Enemy
         public override void AttackPlayer()
         {
             _spriteRenderer.sprite = dash;
-            AudioManager.Instance.PlayAudioSfx(slashSound);
             IsAttacking = true;
             var distance = transform.position + Detector.GetPlayerDirection() * jumpDistance;
             _jumpTween?.Kill();
@@ -95,6 +94,7 @@ namespace Enemy
                 .SetDelay(jumpDelay)
                 .OnComplete(() =>
                 {
+                    AudioManager.Instance.PlayAudioSfx(slashSound);
                     IsAttacking = false;
                     ChangeState(StunState);
                     _spriteRenderer.sprite = stun;
