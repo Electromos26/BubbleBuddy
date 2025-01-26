@@ -167,12 +167,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6182547431807526705, guid: f6a9b9311855d21429c8b9737b854781, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6a9b9311855d21429c8b9737b854781, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 5, y: 5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -244,7 +244,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlayerStats>k__BackingField: {fileID: 11400000, guid: 0a5af43b98081594c8096b73b41cabf8, type: 2}
   <Bobber>k__BackingField: {fileID: 1756706148571269630}
-  <UIHandler>k__BackingField: {fileID: 0}
   <PlayerShrinker>k__BackingField: {fileID: 2275768173455875248}
   pointerArrow: {fileID: 6058149077252163340}
   bubbleSpawnPoint: {fileID: 360347801398695537}
