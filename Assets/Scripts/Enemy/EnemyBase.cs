@@ -16,7 +16,7 @@ namespace Enemy
         [field: SerializeField] public float Points { get; protected set; }
 
         [Header("Hit Effect")] 
-        [SerializeField] protected ParticleSystem hitEffect;
+        [SerializeField] protected ParticleSystem deathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
 
@@ -81,8 +81,8 @@ namespace Enemy
         {
             transform.DOKill(); // Kill any existing tweens
     
-            if (hitEffect)
-                Instantiate(hitEffect, transform.position, Quaternion.identity);
+            if (deathEffect)
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
     
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
@@ -132,6 +132,11 @@ namespace Enemy
                     IsHit = false;
                 }
             });
+        }
+
+        public virtual void SetSpriteNormal()
+        {
+            
         }
 
         private void OnDestroy()

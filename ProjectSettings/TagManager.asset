@@ -15,8 +15,8 @@ TagManager:
   - Ground
   - Obstacles
   - Enemy
-  - 
-  - 
+  - Bullet
+  - Spawner
   - 
   - 
   - 

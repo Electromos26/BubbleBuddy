@@ -8,7 +8,6 @@ namespace Enemy
         [Header("Attack Effect")] 
         [SerializeField] private float scaleStrength = 2f;
         [SerializeField] private float duration = 1.5f;
-        [SerializeField] private ParticleSystem explodeParticle;
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -26,8 +25,8 @@ namespace Enemy
             // Kill all existing tweens before state change
             KillAllTweens();
         
-            if (explodeParticle != null)
-                Instantiate(explodeParticle, transform.position, Quaternion.identity);
+            if (deathEffect)
+                Instantiate(deathEffect, transform.position, Quaternion.identity);
 
             if (Detector.PlayerInRange && Detector.Player != null)
             {
