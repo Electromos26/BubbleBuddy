@@ -10,6 +10,7 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour, IDamageable
     {
+        public GameEvent Event;
         [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
         [field: SerializeField] public PlayerBobber Bobber { get; private set; }
         [field: SerializeField] public PlayerShrinker PlayerShrinker { get; private set; }
@@ -101,7 +102,7 @@ namespace Player
             var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
             bubble.Init(_direction);
 
-            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
+            Event.OnPlayerHealthChange(_currentHealth);
         }
 
         public void TakeDamage()
@@ -111,14 +112,14 @@ namespace Player
             
             _currentHealth -= _damageTaken;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
+            Event.OnPlayerHealthChange(_currentHealth);
         }
 
         public void TakeDamage(int newDamage)
         {
             _currentHealth -= newDamage;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            EventManager.Instance.OnPlayerHealthChange(_currentHealth);
+            Event.OnPlayerHealthChange(_currentHealth);
         }
 
 
@@ -135,7 +136,7 @@ namespace Player
                 CurrentSpeed = PlayerShrinker.HandleSpeed(true, _currentHealth);
                 Debug.Log("Player Speed:" + CurrentSpeed);
 
-                EventManager.Instance.OnPlayerHealthChange(_currentHealth);
+                Event.OnPlayerHealthChange(_currentHealth);
             }
         }
 

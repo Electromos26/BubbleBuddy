@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bc07e3e6c0e2a4d8ea193c1e9e1e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
   <PlayerStats>k__BackingField: {fileID: 11400000, guid: 0a5af43b98081594c8096b73b41cabf8, type: 2}
   <Bobber>k__BackingField: {fileID: 1756706148571269630}
   <PlayerShrinker>k__BackingField: {fileID: 2275768173455875248}

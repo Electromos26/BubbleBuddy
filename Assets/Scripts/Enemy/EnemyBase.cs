@@ -9,6 +9,7 @@ namespace Enemy
     [RequireComponent(typeof(PlayerDetector), typeof(Collider2D))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
+        public GameEvent Event;
         [SerializeField] protected float damage;
         [SerializeField] protected float maxHealth;
         [SerializeField] protected float speed;
@@ -116,8 +117,8 @@ namespace Enemy
                 if (_currentHealth <= 0)
                 {
 
-                    EventManager.Instance.OnEnemyDied?.Invoke(this);
-                    ChangeState(DeathState);
+                   Event.OnEnemyDied?.Invoke(this);
+                   ChangeState(DeathState);
                 }
                 else
                 {

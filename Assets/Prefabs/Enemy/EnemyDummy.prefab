@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50930113afa63214eae5aa5906850441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
   damage: 1
   maxHealth: 100
   speed: 0
@@ -155,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 5130990867150101072}
-  offset: 1
+  attackRange: 0
 --- !u!61 &8437670904468340409
 BoxCollider2D:
   m_ObjectHideFlags: 0

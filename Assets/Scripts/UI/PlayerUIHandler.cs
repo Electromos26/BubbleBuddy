@@ -8,14 +8,14 @@ namespace UI
 {
     public class PlayerUIHandler : MonoBehaviour
     {
-
+        public GameEvent Event;
         [Header("Health UI")] [SerializeField] private GameObject[] _heartContainers;
 
         private int _currentHealth;
 
         private void OnEnable()
         {
-            EventManager.Instance.OnPlayerHealthChange += UpdateHealthUI;
+            Event.OnPlayerHealthChange += UpdateHealthUI;
         }
 
         public void UpdateHealthUI(float playerHealth)
