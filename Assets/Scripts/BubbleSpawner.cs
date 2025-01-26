@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using Managers;
+using Random = UnityEngine.Random;
 
 public class BubbleSpawner : MonoBehaviour
 {
@@ -7,18 +9,14 @@ public class BubbleSpawner : MonoBehaviour
     [SerializeField] private float spawnRadius = 2f;
     [SerializeField] private float cooldownTime = 1f;
     
-    [Header("Gizmo Settings")]
-    [SerializeField] private Color gizmoColor = Color.yellow;
-    [SerializeField] private bool showGizmo = true;
-
     private float lastSpawnTime;
 
-    private void OnEnable()
+    private void Start()
     {
         BubbleSpawnerManager.Instance.RegisterSpawner(this);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         BubbleSpawnerManager.Instance.UnregisterSpawner(this);
     }
@@ -39,12 +37,5 @@ public class BubbleSpawner : MonoBehaviour
         lastSpawnTime = Time.time;
         return bubble;
     }
-
-    private void OnDrawGizmos()
-    {
-        if (!showGizmo) return;
-        
-        Gizmos.color = gizmoColor;
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
-    }
+    
 }

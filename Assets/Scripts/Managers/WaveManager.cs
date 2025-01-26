@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using DG.Tweening;
+using TMPro;
 using Utils;
 
 namespace Managers
@@ -10,9 +12,15 @@ namespace Managers
         public event Action<int> OnWaveStart;
         public float GameTime { get; private set; }
         
+        [SerializeField] private TextMeshProUGUI waveText;
+        
         [Header("Wave Timing")]
         [SerializeField] private float waveDuration = 30f;
         [SerializeField] private float waveBreakDuration = 5f;
+        
+        [Header("Wave Timing")]
+        [SerializeField] private float tweenDuration = 30f;
+        [SerializeField] private Vector2 tweenPos = Vector2.zero;
         
         [Header("Wave Enemy Counts")]
         [SerializeField] private int[] enemiesPerWave = new int[] { 2, 3, 5, 7 };
@@ -21,12 +29,36 @@ namespace Managers
         private float breakTimer;
         private int currentWave = 0;
         private bool isWaveActive = false;
+        
+        private Tween wavebannerTween;
+        private Vector2 waveStartPos;
+        private RectTransform rectTransform;
+       
 
         private void Start()
         {
-            StartNewWave();
+            rectTransform  = GetComponent<RectTransform>();
+            waveStartPos = rectTransform.anchoredPosition;
+            BannerAnimateIn();
         }
 
+        public void BannerAnimateIn()
+        {
+            waveText.text = "Wave: " + currentWave.ToString();
+            wavebannerTween?.Kill();
+            wavebannerTween = rectTransform.DOAnchorPos(tweenPos, tweenDuration).SetEase(Ease.InOutSine)
+                .OnComplete(() =>
+                {
+                    StartNewWave();
+                    BannerAnimateOut();
+                });
+        }
+
+        public void BannerAnimateOut()
+        {
+            wavebannerTween?.Kill();
+            wavebannerTween = rectTransform.DOAnchorPos(waveStartPos, tweenDuration).SetEase(Ease.InOutSine);
+        }
         private void Update()
         {
             if (isWaveActive)
@@ -43,7 +75,7 @@ namespace Managers
                 breakTimer -= Time.deltaTime;
                 if (breakTimer <= 0)
                 {
-                    StartNewWave();
+                    BannerAnimateIn();
                 }
             }
         }
