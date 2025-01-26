@@ -5,13 +5,6 @@ using UnityEngine.UI;
 
 public class MainMenu : Menu
 {
-    public GameEvent gameEvent;
-
-    [Header("Audio"), SerializeField] private Image MuteButtonImage;
-    
-    [Header("Sensitivity"),SerializeField]
-    private Slider sensitivitySlider;
-
     private void Start()
     {
         _startActive = true;
@@ -30,10 +23,8 @@ public class MainMenu : Menu
         //play click sound
     }
 
-    public void OnGiveFeedback()
+    public void OpenURL(string url)
     {
-        Application.OpenURL("");
+        Application.OpenURL(url);
     }
-
-   
 }
