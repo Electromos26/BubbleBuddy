@@ -51,12 +51,12 @@ namespace Player
         
         public void HandleDeathAnimation()
         {
+            Event.EndGame?.Invoke();
             //AudioManager.Instance.PlayAudioSfx(dieSfx);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             transform.DOScale(Vector3.zero, duration);
             transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo).OnComplete(() =>
             {
-              Event.EndGame?.Invoke();
             });
         }
         

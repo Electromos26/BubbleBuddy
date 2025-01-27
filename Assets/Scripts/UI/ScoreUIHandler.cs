@@ -40,6 +40,7 @@ namespace UI
         private void SetScore(EnemyBase score)
         {
             Score += (int)score.Points;
+            Event.Score = Score;
             scoreText.text = Score.ToString();
 
             if (Score < HighScore || HighScore >= PlayerPrefs.GetInt("HighScore")) return;

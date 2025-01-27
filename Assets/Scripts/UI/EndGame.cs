@@ -23,7 +23,7 @@ public class EndGame : Singleton<EndGame>
    private void Start()
    {
       if (text ==null) return;
-      text.text= "YourScore:"  + Event.Score;
+      text.text= "Your Score : "  + Event.Score;
    }
 
    public void EndGameUI(int score)
