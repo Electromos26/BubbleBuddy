@@ -7,7 +7,8 @@ namespace Player
     {
         [field: Header("Movement")]
         [field: SerializeField] public float Acceleration { get; private set; }
-        [field: SerializeField] public float Deceleration { get; private set; }
+        [field: SerializeField] public float Deceleration { get; private set; } 
+        [field: SerializeField] public float DashForce { get; private set; }
         [field: SerializeField] public float MaxSpeed { get; private set; }
         //public float dashSpeed = 10f;
 
@@ -16,6 +17,7 @@ namespace Player
         
         [field: Header("Combat")]
         [field: SerializeField] public float AttackCooldown { get; private set; }
+        [field: SerializeField] public float DashCooldown { get; private set; }
         [field: SerializeField] public int MaxBubbleBulletAmount { get; private set; }
         [field: SerializeField] public BubbleBullet BubbleBulletPrefab { get; private set; }
 

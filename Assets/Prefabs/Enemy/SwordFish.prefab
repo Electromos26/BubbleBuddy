@@ -166,6 +166,8 @@ MonoBehaviour:
   deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 50
+  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
+  spawnRadius: 2
   stunTime: 3
   lookSpeed: 2
   jumpDistance: 15

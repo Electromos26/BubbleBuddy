@@ -28,7 +28,7 @@ namespace Player
             _playerInput.Player.Move.canceled += Move;
             
             _playerInput.Player.Attack.performed += Attack;
-          //  _playerInput.Player.Attack.canceled += Attack;
+            _playerInput.Player.Dash.performed += Dash;
 
             _playerInput.Player.Look.performed += Look;
         }
@@ -39,7 +39,7 @@ namespace Player
             _playerInput.Player.Move.canceled -= Move;
 
             _playerInput.Player.Attack.performed -= Attack;
-            //_playerInput.Player.Attack.canceled -= Attack;
+            _playerInput.Player.Dash.performed -= Dash;
             
             _playerInput.Player.Look.performed -= Look;
             
@@ -60,6 +60,11 @@ namespace Player
         private void Attack(InputAction.CallbackContext context)
         {
            _playerController.HandleAttack();
+        }
+        
+        private void Dash(InputAction.CallbackContext context)
+        {
+            _playerController.HandleDash();
         }
         
         private void Look(InputAction.CallbackContext context)

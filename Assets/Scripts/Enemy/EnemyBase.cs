@@ -15,31 +15,34 @@ namespace Enemy
         [SerializeField] protected float speed;
         [field: SerializeField] public float Points { get; protected set; }
 
-        [Header("Hit Effect")] 
+        [Header("Hit Effect")]
         [SerializeField] protected ParticleSystem deathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
+
+        [SerializeField] protected BubbleCollectible bubbleCollectableDrop;
+        [SerializeField] protected float spawnRadius = 2f;
 
 
         public EnemyChaseState ChaseState;
         public EnemyAttackState AttackState;
         public EnemyDeathState DeathState;
         public EnemyStunState StunState;
-       
+
         protected EnemyBaseState CurrentState;
 
         public PlayerDetector Detector { get; set; }
-        public CountdownTimer StunTimer{ get; protected set; }
+        public CountdownTimer StunTimer { get; protected set; }
         protected Tween GetHitTween;
 
         public bool ChargeUpFinished { get; protected set; }
-        public bool IsHit { get; private set; } 
+        public bool IsHit { get; private set; }
         public bool IsAttacking { get; set; }
 
         protected SpriteRenderer _spriteRenderer;
         protected float _currentHealth;
 
-        
+
         private Tween _hitTween;
         private Tween _deathTween;
         protected Tween ChargeTween;
@@ -50,9 +53,9 @@ namespace Enemy
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             Detector = GetComponent<PlayerDetector>();
             _currentHealth = maxHealth;
-            
+
             Init();
-            
+
             ChangeState(ChaseState);
         }
 
@@ -80,29 +83,17 @@ namespace Enemy
         public virtual void PlayDeathAnimation()
         {
             transform.DOKill(); // Kill any existing tweens
-    
+
             if (deathEffect)
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
-    
+
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
-                .OnComplete(() => {
-                    Destroy(gameObject);
-                });
+                .OnComplete(() => { Destroy(gameObject); });
         }
 
 
         #region EnemyStates
-
-        public void ChangeState(EnemyBaseState newState)
-        {
-            if(CurrentState == newState) return;
-            CurrentState?.ExitState();
-            CurrentState = newState;
-            CurrentState.EnterState();
-        }
-
-        #endregion
 
         protected void Init()
         {
@@ -112,10 +103,21 @@ namespace Enemy
             StunState = new EnemyStunState(this);
         }
 
+        public void ChangeState(EnemyBaseState newState)
+        {
+            if (CurrentState == newState) return;
+            CurrentState?.ExitState();
+            CurrentState = newState;
+            CurrentState.EnterState();
+        }
+
+        #endregion
+
+
         public virtual void GetDamaged(float damage)
         {
             _currentHealth -= damage;
-            
+
             IsHit = true;
 
             _hitTween?.Kill();
@@ -123,9 +125,8 @@ namespace Enemy
             {
                 if (_currentHealth <= 0)
                 {
-
-                   Event.OnEnemyDied?.Invoke(this);
-                   ChangeState(DeathState);
+                    Event.OnEnemyDied?.Invoke(this);
+                    ChangeState(DeathState);
                 }
                 else
                 {
@@ -134,9 +135,16 @@ namespace Enemy
             });
         }
 
+        public void DropBubble()
+        {
+            Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
+            Vector3 spawnPosition = transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
+
+            Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+        }
+
         public virtual void SetSpriteNormal()
         {
-            
         }
 
         private void OnDestroy()

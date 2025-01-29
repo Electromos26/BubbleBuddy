@@ -18,12 +18,13 @@ namespace Player
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
         
-         [SerializeField] private AudioClip popShoot;
-        
+        [SerializeField] private AudioClip popShoot;
+
         public PlayerMoveState MoveState;
         public PlayerAttackState AttackState;
         public PlayerIdleState IdleState;
         public PlayerHurtState HurtState;
+        public PlayerDashState DashState;
         public PlayerDeathState DeathState;
 
         private PlayerBaseState CurrentState { get; set; }
@@ -31,6 +32,7 @@ namespace Player
         public InputManager InputManager { get; private set; }
         public Rigidbody2D Rb { get; private set; }
         public CountdownTimer AttackTimer { get; private set; }
+        public CountdownTimer DashTimer { get; private set; }
         public float CurrentSpeed { get; set; }
 
         private Camera _mainCamera;
@@ -47,6 +49,8 @@ namespace Player
 
             _mainCamera = Camera.main;
             AttackTimer = new CountdownTimer(PlayerStats.AttackCooldown);
+            DashTimer = new CountdownTimer(PlayerStats.DashCooldown);
+            DashTimer.Start();
             AttackTimer.Start();
 
             _currentHealth = PlayerStats.MaxHealth;
@@ -56,13 +60,14 @@ namespace Player
             InitStates();
             ChangeState(IdleState);
         }
-        
+
         private void Update()
         {
             if (!HasDied())
                 Animator.HandleMoveAnimation(InputManager.Movement);
 
             AttackTimer?.Tick(Time.deltaTime);
+            DashTimer?.Tick(Time.deltaTime);
             CurrentState.UpdateState();
         }
 
@@ -94,14 +99,7 @@ namespace Player
                 return;
             }
 
-            _currentHealth -= 1;
-            _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-
-           // AudioManager.Instance.PlayAudioSfx(popShoot);
-            
-            PlayerShrinker.HandleShrink(false);
-            CurrentSpeed = PlayerShrinker.HandleSpeed(false);
-            Debug.Log("Player Speed:" + CurrentSpeed);
+            // AudioManager.Instance.PlayAudioSfx(popShoot);
 
             var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
             bubble.Init(_direction);
@@ -112,8 +110,8 @@ namespace Player
         public void TakeDamage()
         {
             PlayerShrinker.HandleShrink(false);
-            CurrentSpeed = PlayerShrinker.HandleSpeed(false);
-            
+            CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
+
             _currentHealth -= _damageTaken;
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
             Event.OnPlayerHealthChange(_currentHealth);
@@ -135,11 +133,10 @@ namespace Player
                 _currentHealth += restoreAmount;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
 
-              //  AudioManager.Instance.PlayAudioSfx(popShoot);
+                //  AudioManager.Instance.PlayAudioSfx(popShoot);
 
-                PlayerShrinker.HandleShrink(true, _currentHealth);
-                CurrentSpeed = PlayerShrinker.HandleSpeed(true, _currentHealth);
-                Debug.Log("Player Speed:" + CurrentSpeed);
+                PlayerShrinker.HandleShrink(true, Mathf.Abs(restoreAmount));
+                CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
 
                 Event.OnPlayerHealthChange(_currentHealth);
             }
@@ -162,6 +159,7 @@ namespace Player
             AttackState = new PlayerAttackState(this);
             IdleState = new PlayerIdleState(this);
             HurtState = new PlayerHurtState(this);
+            DashState = new PlayerDashState(this);
             DeathState = new PlayerDeathState(this);
         }
 
@@ -169,6 +167,12 @@ namespace Player
         {
             if (HasALife())
                 CurrentState.HandleAttack();
+        }
+
+        public void HandleDash()
+        {
+            if (HasALife())
+                CurrentState.HandleDash();
         }
 
         public void GetDamaged(float damage)

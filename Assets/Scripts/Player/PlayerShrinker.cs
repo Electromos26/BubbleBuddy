@@ -26,15 +26,15 @@ namespace Player
             _currentSize += grow ? growAmount : -growAmount;
             _currentSize = Mathf.Clamp(_currentSize, 0, ShrinkSizes.Length - 1);
 
+            _currentSpeed += grow ? growAmount : -growAmount;
+            _currentSpeed = Mathf.Clamp(_currentSpeed, 0 , ShrinkSpeeds.Length - 1);
+            
             _srinkTween?.Kill();
             _srinkTween = transform.DOScale(ShrinkSizes[_currentSize], duration).SetEase(ease); 
         }
 
-        public float HandleSpeed(bool grow, int growAmount = 1)
+        public float GetCurrentSpeed()
         {
-            _currentSpeed += grow ? growAmount : -growAmount;
-            _currentSpeed = Mathf.Clamp(_currentSpeed, 0 , ShrinkSpeeds.Length - 1);
-            
             return ShrinkSpeeds[_currentSpeed];
         }
     }

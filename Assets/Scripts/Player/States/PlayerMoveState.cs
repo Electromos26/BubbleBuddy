@@ -44,5 +44,10 @@ namespace Player.States
         {
             Player.ChangeState(Player.AttackState);
         }
+
+        public override void HandleDash()
+        {
+            Player.ChangeState(Player.DashState);
+        }
     }
 }
