@@ -1,9 +1,8 @@
 using System;
-using Managers;
+using DG.Tweening;
 using Player;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace UI
@@ -11,46 +10,47 @@ namespace UI
     public class PlayerUIHandler : MonoBehaviour
     {
         public GameEvent Event;
-        //[Header("Health UI")] [SerializeField] private GameObject[] _heartContainers;
-        
+        public PlayerStats PlayerStats;
+        [Header("Health UI")]
         [SerializeField] private Slider healthSlider;
- 
-        private int _currentHealth;
+        [SerializeField] private float healthSmoothSpeed = 5f;
+
+        [Header("Shake Effect")] 
+        [SerializeField] private float shakeDuration = 0.5f;
+        [SerializeField] private float shakeStrength = 0.5f;
+        
+        private Tween _shakeTween;
+
+        private void Awake()
+        {
+            if (healthSlider == null)
+                healthSlider = GetComponentInChildren<Slider>();
+
+            healthSlider.maxValue = PlayerStats.MaxHealth;
+        }
 
         private void OnEnable()
         {
-           // Event.OnPlayerHealthChange += UpdateHealthUI;
+            Event.OnPlayerHealthChange += UpdateHealthUI;
+            Event.OnPlayerHit += ShakeHealthUI;
         }
 
-        private void UpdateHealth()
+        private void OnDisable()
         {
-            
+            Event.OnPlayerHealthChange -= UpdateHealthUI;
+            Event.OnPlayerHit -= ShakeHealthUI;
+        }
+
+
+        private void UpdateHealthUI(float playerHealth)
+        {
+            healthSlider.value = Mathf.Lerp(healthSlider.value, playerHealth, Time.deltaTime * healthSmoothSpeed);
         }
         
-        
-/**/        /*public void UpdateHealthUI(float playerHealth)
+        private void ShakeHealthUI()
         {
-            int newHealth = Mathf.Clamp(Mathf.RoundToInt(playerHealth), 0, _heartContainers.Length);
-            
-            if (_currentHealth == newHealth) return;
-
-            _currentHealth = newHealth;
-            
-            for (var i = 0; i < _heartContainers.Length; i++)
-            {
-                _heartContainers[i].SetActive(i < _currentHealth);
-            }
-        }*/
-
-
-
-        public void RoundNumber(string numTxt)
-        {
-            int num = Convert.ToInt32(numTxt);
-            
-                int rem = num % 10;
-                
-                  //  displayText.text =  (num - rem).ToString();
+            _shakeTween?.Kill();
+            _shakeTween = transform.DOShakePosition(shakeDuration, shakeStrength);
         }
     }
 }

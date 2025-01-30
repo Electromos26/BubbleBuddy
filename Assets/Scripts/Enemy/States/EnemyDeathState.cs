@@ -11,7 +11,6 @@ namespace Enemy.States
         public override void EnterState()
         {
             Enemy.PlayDeathAnimation();
-            Enemy.DropBubble();
         }
 
         public override void ExitState()

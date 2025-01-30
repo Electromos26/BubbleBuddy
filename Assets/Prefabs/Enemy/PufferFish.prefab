@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 867921036275047180}
   m_Layer: 9
   m_Name: PufferFish
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
-  damage: 3
+  damage: 10
   maxHealth: 1
   speed: 7
   <Points>k__BackingField: 100
@@ -167,7 +167,7 @@ MonoBehaviour:
   hitDuration: 1
   hitStrength: 10
   bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
-  spawnRadius: 2
+  spawnRadius: 3
   scaleStrength: 1
   duration: 2
   explodeEffect: {fileID: 2910635792451731281, guid: e3b951bec7f7143bb84123f67cfbbeef, type: 3}

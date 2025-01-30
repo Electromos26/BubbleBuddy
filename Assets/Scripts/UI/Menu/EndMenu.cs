@@ -21,6 +21,15 @@ public class EndMenu : Menu
         blackScreenUIAnimator.Duration = 0.5f; 
         blackScreenUIAnimator.FadeAnimate();
     }
+    
+    public void RePlayGame()
+    {
+        blackScreenUIAnimator.OnAnimateFinished.AddListener(LoadGameScene);
+        blackScreenUIAnimator.Duration = 0.5f; 
+        blackScreenUIAnimator.FadeAnimate();
+    }
 
     private void LoadMainMenu() => SceneManager.LoadScene(0);
+    
+    private void LoadGameScene() => SceneManager.LoadScene(1);
 }

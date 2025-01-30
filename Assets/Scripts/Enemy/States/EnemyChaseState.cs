@@ -19,16 +19,17 @@ namespace Enemy.States
 
         public override void UpdateState()
         {
-            if (Detector.CanAttack())
+            if (Detector.Player.HasDied())
+            {
+                Enemy.ChangeState(Enemy.IdleState);
+            }
+            else if (Detector.CanAttack())
             {
                 Enemy.ChangeState(Enemy.AttackState);
             }
-            else
+            else if (!Enemy.IsHit)
             {
-                if (!Enemy.IsHit)
-                {
-                    Enemy.FollowPlayer();
-                }
+                Enemy.FollowPlayer();
             }
         }
     }

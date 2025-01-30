@@ -15,8 +15,8 @@ namespace Enemy
         [SerializeField] protected float speed;
         [field: SerializeField] public float Points { get; protected set; }
 
-        [Header("Hit Effect")]
-        [SerializeField] protected ParticleSystem deathEffect;
+        [Header("Hit Effect")] [SerializeField]
+        protected ParticleSystem deathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
 
@@ -28,6 +28,7 @@ namespace Enemy
         public EnemyAttackState AttackState;
         public EnemyDeathState DeathState;
         public EnemyStunState StunState;
+        public EnemyIdleState IdleState;
 
         protected EnemyBaseState CurrentState;
 
@@ -89,7 +90,12 @@ namespace Enemy
 
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
-                .OnComplete(() => { Destroy(gameObject); });
+                .OnComplete(() =>
+                {
+                    if (SpawnManager.Instance)
+                        SpawnManager.Instance.SpawnBubble(transform.position, bubbleCollectableDrop, spawnRadius);
+                    Destroy(gameObject, 2f);
+                });
         }
 
 
@@ -101,6 +107,7 @@ namespace Enemy
             DeathState = new EnemyDeathState(this);
             ChaseState = new EnemyChaseState(this);
             StunState = new EnemyStunState(this);
+            IdleState = new EnemyIdleState(this);
         }
 
         public void ChangeState(EnemyBaseState newState)
@@ -134,14 +141,7 @@ namespace Enemy
                 }
             });
         }
-
-        public void DropBubble()
-        {
-            Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
-            Vector3 spawnPosition = transform.position + new Vector3(randomPoint.x, 0f, randomPoint.y);
-
-            Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
-        }
+        
 
         public virtual void SetSpriteNormal()
         {

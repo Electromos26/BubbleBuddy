@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utils;
 
-public class EndGame : Singleton<EndGame>
+public class EndGame : MonoBehaviour
 {
    public GameEvent Event;
 

@@ -18,11 +18,8 @@ namespace Player.States
         public override void EnterState()
         {
             if (_cooldownTimer.IsFinished)
-            {
-                if (Player.HasALife())
-                {
-                    FireBubble();
-                }
+            { 
+                FireBubble();
             }
 
             Player.ChangeState(Player.IdleState);

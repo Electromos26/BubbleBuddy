@@ -9,6 +9,9 @@ public class GameEvent : ScriptableObject
     public UnityAction<EnemyBase> OnEnemyDied;
         
     public UnityAction<float> OnPlayerHealthChange;
+    
+    public UnityAction OnPlayerHit;
+    public UnityAction OnPlayerDeath;
 
     public UnityAction EndGame;
     

@@ -7,7 +7,7 @@ public class ButtonEffectsInspector : ButtonEditor
     private SerializedProperty duration;
     private SerializedProperty ease;
     private SerializedProperty start;
-    private SerializedProperty target;
+    private SerializedProperty end;
 
     protected override void OnEnable()
     {
@@ -16,7 +16,7 @@ public class ButtonEffectsInspector : ButtonEditor
         duration = serializedObject.FindProperty("duration");
         ease = serializedObject.FindProperty("ease");
         start = serializedObject.FindProperty("start");
-        target = serializedObject.FindProperty("target");
+        end = serializedObject.FindProperty("end");
 
     }
 
@@ -29,7 +29,7 @@ public class ButtonEffectsInspector : ButtonEditor
         EditorGUILayout.PropertyField(duration);
         EditorGUILayout.PropertyField(ease);
         EditorGUILayout.PropertyField(start);
-        EditorGUILayout.PropertyField(target);
+        EditorGUILayout.PropertyField(end);
         
         
         serializedObject.ApplyModifiedProperties();

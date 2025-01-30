@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 5130990867150101072}
   m_Layer: 9
   m_Name: EnemyDummy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,13 +136,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
-  damage: 1
+  damage: 20
   maxHealth: 100
   speed: 0
-  <Points>k__BackingField: 0
-  hitEffect: {fileID: 0}
+  <Points>k__BackingField: 200
+  deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 1
+  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
+  spawnRadius: 2
 --- !u!114 &5235978729993204193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 5130990867150101072}
-  attackRange: 0
+  attackRange: 2
 --- !u!61 &8437670904468340409
 BoxCollider2D:
   m_ObjectHideFlags: 0

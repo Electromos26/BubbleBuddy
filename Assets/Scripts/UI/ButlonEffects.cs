@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ButlonEffects : Button
@@ -9,7 +10,7 @@ public class ButlonEffects : Button
     public float duration = 0.3f;
     public Ease ease = Ease.InOutSine;
     public float start = 1;
-    public float target = 0;
+    public float end = 2;
 
     private Tween _buttonTween;
     private RectTransform _buttonTransform;
@@ -25,7 +26,7 @@ public class ButlonEffects : Button
         base.OnPointerEnter(eventData);
       
         _buttonTween?.Kill();
-        _buttonTween = _buttonTransform.DOScale(target, duration).SetEase(ease).SetUpdate(true);
+        _buttonTween = _buttonTransform.DOScale(end, duration).SetEase(ease).SetUpdate(true);
     }
 
     public override void OnPointerExit(PointerEventData eventData)

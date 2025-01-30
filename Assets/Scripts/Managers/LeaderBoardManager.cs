@@ -1,102 +1,69 @@
-//using Dan.Main;
-//using Dan.Models;
+using Dan.Main;
+using Dan.Models;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UI;
 
 public class LeaderBoardManager : MonoBehaviour
 {
-    /*[SerializeField] private GameObject leaderBoardSpawnBox;
+    public GameEvent Event;
     [SerializeField] private LBPlayerHolder[] scoreFields;
 
+    [SerializeField] private TextMeshProUGUI ScoreText;
     [SerializeField] private TMP_InputField userNameInput;
     [SerializeField] private Button submitButton;
-    [SerializeField] private Button backButton;
+
     [SerializeField] private int minNameLength = 3;
     [SerializeField] private int maxNameLength = 15;
-    [SerializeField] private GameObject loadingImage;
 
-    [SerializeField] private TextMeshProUGUI personalRank;
+    [Header("Loading")] [SerializeField] private GameObject loadingImage;
+    [SerializeField] private GameObject leaderBoardNameBox;
+
+    [Header("Personal Entry")] [SerializeField]
+    private TextMeshProUGUI personalRank;
+
     [SerializeField] private TextMeshProUGUI personalScore;
-
-    [SerializeField] private GameDataSO ScoreSO;
 
     [SerializeField] private UIAnimator uIAnimator;
 
-    [SerializeField] private EventSystem eventSystem;
-
     private void OnEnable()
     {
-        if (ScoreSO.PlayedGame)
-        {
-            uIAnimator.OnAnimateFinished.AddListener(() =>
-            {
-                OnSubmit();
-            });
-        }
-    }
-
-    private GameObject GetMenusButton() 
-    {
-        if (ScoreSO.PlayedGame)
-        {
-            return userNameInput.gameObject;
-        }
-        else
-        {
-            return backButton.gameObject;
-        }
+        uIAnimator.OnAnimateFinished.AddListener(OnSubmit);
     }
 
     private void OnDisable()
     {
-        if (ScoreSO.PlayedGame)
-        {
-            uIAnimator.OnAnimateFinished.RemoveListener(() =>
-        {
-            OnSubmit();
-        });
-        }
+        uIAnimator.OnAnimateFinished.RemoveListener(OnSubmit);
     }
 
     private void Start()
     {
-        if (!ScoreSO.PlayedGame)
-            LoadLeaderBoard();
-        else
-            LeaderboardCreator.ResetPlayer();
-
-
-        eventSystem.SetSelectedGameObject(GetMenusButton());
+        ScoreText.text = "Your Score : " + Event.Score;
+        LeaderboardCreator.ResetPlayer();
     }
 
-    public void OnSubmit() => SendLeaderBoardEntry(userNameInput.text, ScoreSO.Score);
+    private void OnSubmit() => SendLeaderBoardEntry(userNameInput.text, Event.Score);
 
-    public void LoadLeaderBoard()
-    {
-        uIAnimator.MoveAnimate();
-        GetLeaderBoard();
-        SetEmptyPersonalScore();
-    }
+    private void Update() => submitButton.interactable =
+        userNameInput.text.Length > minNameLength && userNameInput.text.Length < maxNameLength;
 
-    private void Update() => submitButton.interactable = userNameInput.text.Length > minNameLength && userNameInput.text.Length < maxNameLength;
+    #region LEADER BOARD
 
-    #region LEADER BOARD 
+    private const string PublicLeaderBoardKey = "a92682080da1ed9f3b0f0b46e5fd441d0a00d8edffbf4a403f23c0f233f30180";
 
-    private readonly string publicLeaderBoardKey = "a92682080da1ed9f3b0f0b46e5fd441d0a00d8edffbf4a403f23c0f233f30180";
-
-    public void GetLeaderBoard()
+    private void GetLeaderBoard()
     {
         ToggleLoadingPanel(false);
-        foreach (LBPlayerHolder scoreFields in scoreFields)
+        foreach (var playerHolder in scoreFields)
         {
-            scoreFields.ClearText();
+            playerHolder.ClearText();
         }
-        LeaderboardCreator.GetLeaderboard(publicLeaderBoardKey, ((msg) =>
+
+        LeaderboardCreator.GetLeaderboard(PublicLeaderBoardKey, ((msg) =>
         {
-            int loopLength = (msg.Length < scoreFields.Length) ? msg.Length : scoreFields.Length;
-            for (int i = 0; i < loopLength; i++)
+            var loopLength = (msg.Length < scoreFields.Length) ? msg.Length : scoreFields.Length;
+            for (var i = 0; i < loopLength; i++)
             {
                 scoreFields[i].SetPlayerData(msg[i].Username, score: msg[i].Score, rank: (i + 1));
             }
@@ -108,25 +75,20 @@ public class LeaderBoardManager : MonoBehaviour
     private void ToggleLoadingPanel(bool state)
     {
         loadingImage.SetActive(!state);
-        leaderBoardSpawnBox.SetActive(state);
+        leaderBoardNameBox.SetActive(state);
     }
 
-    public void SendLeaderBoardEntry(string username, int score)
+    private void SendLeaderBoardEntry(string username, int score)
     {
-        LeaderboardCreator.UploadNewEntry(publicLeaderBoardKey, username, score, ((msg) =>
+        LeaderboardCreator.UploadNewEntry(PublicLeaderBoardKey, username, score, ((msg) =>
         {
             GetLeaderBoard();
             GetPersonalEntry();
         }));
-
     }
-    private void GetPersonalEntry() => LeaderboardCreator.GetPersonalEntry(publicLeaderBoardKey, OnPersonalEntryLoaded, ErrorCallback);
 
-    private void SetEmptyPersonalScore()
-    {
-        personalRank.text = "Rank: -";
-        personalScore.text = "Score: -";
-    }
+    private void GetPersonalEntry() =>
+        LeaderboardCreator.GetPersonalEntry(PublicLeaderBoardKey, OnPersonalEntryLoaded, ErrorCallback);
 
     private void ErrorCallback(string error) => Debug.LogError(error);
 
@@ -136,5 +98,6 @@ public class LeaderBoardManager : MonoBehaviour
         personalRank.text = $" Rank: {entry.RankSuffix()}";
         personalScore.text = $" Score: {entry.Score}";
     }
-    #endregion  */
+
+    #endregion
 }

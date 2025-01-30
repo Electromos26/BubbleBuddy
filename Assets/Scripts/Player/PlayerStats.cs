@@ -14,6 +14,7 @@ namespace Player
 
         [field: Header("Health")]
         [field: SerializeField] public int MaxHealth { get; private set; } = 5;
+        [field: SerializeField] public float DepletionRate { get; private set; } = 1;
         
         [field: Header("Combat")]
         [field: SerializeField] public float AttackCooldown { get; private set; }

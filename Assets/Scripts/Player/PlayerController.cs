@@ -1,5 +1,3 @@
-using System;
-using Managers;
 using UnityEngine;
 using Player.States;
 using UI;
@@ -14,10 +12,11 @@ namespace Player
         [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
         [field: SerializeField] public PlayerBobber Bobber { get; private set; }
         [field: SerializeField] public PlayerShrinker PlayerShrinker { get; private set; }
+        [field: SerializeField] public PlayerUIHandler PlayerHealth { get; private set; }
 
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
-        
+
         [SerializeField] private AudioClip popShoot;
 
         public PlayerMoveState MoveState;
@@ -37,8 +36,8 @@ namespace Player
 
         private Camera _mainCamera;
         private Vector2 _direction;
-        private int _currentHealth;
-        private int _damageTaken;
+        private float _currentHealth;
+        private float _damageTaken;
 
         private void Awake()
         {
@@ -66,6 +65,7 @@ namespace Player
             if (!HasDied())
                 Animator.HandleMoveAnimation(InputManager.Movement);
 
+            DepleteHealth();
             AttackTimer?.Tick(Time.deltaTime);
             DashTimer?.Tick(Time.deltaTime);
             CurrentState.UpdateState();
@@ -103,27 +103,31 @@ namespace Player
 
             var bubble = Instantiate(PlayerStats.BubbleBulletPrefab, bubbleSpawnPoint.position, Quaternion.identity);
             bubble.Init(_direction);
+        }
 
-            Event.OnPlayerHealthChange(_currentHealth);
+        private int CalculateCurrentBar()
+        {
+            var barAmount = PlayerStats.MaxHealth / 5; // change 5 to the number of bars on UI
+            return Mathf.FloorToInt(_currentHealth / barAmount);
         }
 
         public void TakeDamage()
         {
-            PlayerShrinker.HandleShrink(false);
-            CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
+            // Calculate the bar amount
+            var barAmount = PlayerStats.MaxHealth / 5; // change 5 to the number of bars on UI
 
-            _currentHealth -= _damageTaken;
+            // Floor current health to the nearest bar
+            _currentHealth -= _currentHealth % barAmount;
+
+            // Clamp health after flooring
             _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            Event.OnPlayerHealthChange(_currentHealth);
-        }
 
-        public void TakeDamage(int newDamage)
-        {
-            _currentHealth -= newDamage;
-            _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
-            Event.OnPlayerHealthChange(_currentHealth);
-        }
+            // Handle shrink based on current bar
+            PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
 
+            Event.OnPlayerHealthChange(_currentHealth);
+            Event.OnPlayerHit.Invoke();
+        }
 
         private void Refill(int restoreAmount)
         {
@@ -133,15 +137,28 @@ namespace Player
                 _currentHealth += restoreAmount;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
 
-                //  AudioManager.Instance.PlayAudioSfx(popShoot);
-
-                PlayerShrinker.HandleShrink(true, Mathf.Abs(restoreAmount));
-                CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
+                // Handle shrink based on current bar
+                PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
 
                 Event.OnPlayerHealthChange(_currentHealth);
             }
         }
 
+        private void DepleteHealth()
+        {
+            _currentHealth -= Time.deltaTime * PlayerStats.DepletionRate;
+            _currentHealth = Mathf.Clamp(_currentHealth, 0, PlayerStats.MaxHealth);
+
+            // Handle shrink based on current bar
+            PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
+
+            Event.OnPlayerHealthChange(_currentHealth);
+
+            if (_currentHealth <= 0)
+            {
+                ChangeState(DeathState);
+            }
+        }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
@@ -165,13 +182,13 @@ namespace Player
 
         public void HandleAttack()
         {
-            if (HasALife())
+            if (!HasDied())
                 CurrentState.HandleAttack();
         }
 
         public void HandleDash()
         {
-            if (HasALife())
+            if (!HasDied())
                 CurrentState.HandleDash();
         }
 
@@ -199,12 +216,6 @@ namespace Player
             return _currentHealth <= 0;
         }
 
-        public bool HasALife()
-        {
-            return _currentHealth > 1;
-        }
-
         #endregion
-        
     }
 }
