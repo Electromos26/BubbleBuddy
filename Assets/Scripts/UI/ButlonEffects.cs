@@ -1,45 +1,47 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ButlonEffects : Button
 {
+    [Header("Tween Settings")]
+    public float duration = 0.3f;
+    public Ease ease = Ease.InOutSine;
+    public float start = 1;
+    public float target = 0;
 
-    private RectTransform rectTransform;
+    private Tween _buttonTween;
+    private RectTransform _buttonTransform;
 
     protected override void Awake()
     {
+        _buttonTransform = GetComponent<RectTransform>();
         base.Awake();
-        rectTransform = GetComponent<RectTransform>();
-
-        // Adding Event Trigger listener for OnPointerEnter and OnPointerExit
-        var trigger = gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
-        
-        UnityEngine.EventSystems.EventTrigger.Entry entry = new UnityEngine.EventSystems.EventTrigger.Entry
-        {
-            eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter
-        };
-        entry.callback.AddListener((data) => OnHoverStart());
-        trigger.triggers.Add(entry);
-
-        entry = new UnityEngine.EventSystems.EventTrigger.Entry
-        {
-            eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit
-        };
-        entry.callback.AddListener((data) => OnHoverStop());
-        trigger.triggers.Add(entry);
     }
 
-    private void OnHoverStart()
+    public override void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOScale(new Vector3(2,2,2), 0.5f);
-        Debug.Log("OnHoverStart");
+        base.OnPointerEnter(eventData);
+      
+        _buttonTween?.Kill();
+        _buttonTween = _buttonTransform.DOScale(target, duration).SetEase(ease).SetUpdate(true);
     }
 
-    private void OnHoverStop()
+    public override void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOScale(Vector3.one, 0.5f);
+        base.OnPointerExit(eventData);
+        _buttonTween?.Kill();
+        _buttonTween = _buttonTransform.DOScale(start, duration).SetEase(ease).SetUpdate(true);
     }
-    
+
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        base.OnPointerDown(eventData);
+    }
+
+    public override void OnPointerUp(PointerEventData eventData)
+    {
+        base.OnPointerUp(eventData);
+    }
 }
