@@ -987,7 +987,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.74748904
+          value: 0.71749026
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -995,13 +995,13 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
+          time: 0.7017784
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.8240363
+          outSlope: -0.8240363
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.752394
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -4805,7 +4805,7 @@ ParticleSystemRenderer:
   m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
-  m_MaxParticleSize: 0.5
+  m_MaxParticleSize: 1
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
