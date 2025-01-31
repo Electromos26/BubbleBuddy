@@ -1,32 +1,37 @@
+using Events;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utils;
 
 namespace Managers
 {
     public class GameManager : Singleton<GameManager>
     {
-       public GameState CurrentGameState { get; private set; }
+        public GameEvent Event;
+        [SerializeField] private UIAnimator blackScreenAnimator;
 
-        private void Start()
+        private void OnEnable()
         {
-            CurrentGameState = GameState.MainMenu;
-        }
-
-        public void ChangeGameState(GameState state)
-        {
-            CurrentGameState = state;
+            Event.OnEndGame += End;
+            blackScreenAnimator.OnAnimateFinished.AddListener(SwitchScene);
         }
         
+        private void OnDisable()
+        {
+            Event.OnEndGame -= End;
+            blackScreenAnimator.OnAnimateFinished.RemoveListener(SwitchScene);
+        }
+        
+        private void End()
+        {
+            blackScreenAnimator.FadeAnimate();
+        }
+        
+        private void SwitchScene()
+        {
+            SceneManager.LoadScene("03_LeaderBoard");
+        }
         
         
-    }
-
-    public enum GameState
-    {
-        MainMenu,
-        GameStarting,
-        BetweenWaves,
-        InBattle,
-        GameOver
     }
 }

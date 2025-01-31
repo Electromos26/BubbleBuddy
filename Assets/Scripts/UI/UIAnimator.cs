@@ -134,6 +134,7 @@ public class UIAnimator : MonoBehaviour
     {
         if (currentTween.IsActive())
             return;
+        currentTween.Kill();
 
         if (isFadeChanged)
             currentTween = canvasGroup.DOFade(0, duration).SetEase(ease);
@@ -151,6 +152,9 @@ public class UIAnimator : MonoBehaviour
 
     public void FadeInAnimate(bool fade)
     {
+        
+        
+        currentTween?.Kill();
         if (fade)
             currentTween = canvasGroup.DOFade(1, duration).SetEase(ease);
         else

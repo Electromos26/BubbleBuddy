@@ -18,6 +18,8 @@ namespace Managers
         private float waveBreakInterval = 5f;
 
         [SerializeField][Min(0.1f)] private float spawnRate = 2f;
+        [SerializeField] private float baseEnemyCount = 2;
+        [SerializeField] private float scalingFactor = 1.5f;
 
         public int CurrentWave { get; private set; }
         public int CurrentEnemyPerWave { get; set; }
@@ -68,6 +70,8 @@ namespace Managers
         {
             if (CurrentEnemyPerWave <= 0 || _spawnedEnemyCount == CurrentEnemyPerWave) return;
 
+            Debug.Log("Spawning Enemy: " + _spawnedEnemyCount);
+            
             if (!_spawnTimer.IsFinished) return;
             
             EnemyManager.Instance.SpawnEnemy();
@@ -80,11 +84,12 @@ namespace Managers
         private void ShowBanner()
         {
             CurrentWave++;
-            CurrentEnemyPerWave = (int)Mathf.Pow(2, CurrentWave);
+            CurrentEnemyPerWave = (int)(baseEnemyCount + Mathf.Pow(CurrentWave, scalingFactor));
             Debug.Log($"Wave: {CurrentWave} Enemy Count: {CurrentEnemyPerWave}");
             
             waveText.text = $"Wave: {CurrentWave}";
             waveBannerAnimator.FadeInAnimate(true);
+            _spawnedEnemyCount = 0;
             _isWaveActive = false;
             _waveTimer.Reset();
             _waveTimer.Start();

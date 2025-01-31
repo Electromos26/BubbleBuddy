@@ -88,6 +88,10 @@ namespace Enemy
 
         public virtual void PlayDeathAnimation()
         {
+            foreach (var collider in GetComponents<Collider2D>())
+            {
+                collider.enabled = false;
+            }
             transform.DOKill(); // Kill any existing tweens
 
             if (deathEffect)

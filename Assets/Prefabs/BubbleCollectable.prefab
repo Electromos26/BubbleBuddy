@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8086537742227679218}
   - component: {fileID: 5188154347408048801}
   - component: {fileID: 6216000740691607485}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BubbleCollectable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314d808b3c7215548a4c3a10122c1c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoverAmount: 50
+  recoverAmount: 15
   bubble: {fileID: 8541857421367150183}
   bobHeight: 0.25
   bobDuration: 1.5
@@ -99,7 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8541857421367150183}
   - component: {fileID: 3629042111941126338}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BubbleSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

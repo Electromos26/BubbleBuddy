@@ -28,7 +28,9 @@ namespace Managers
             yield return new WaitForSeconds(delay);
             var randomPoint = Random.insideUnitCircle * spawnRadius;
             var spawnPosition = spawnPos + new Vector3(randomPoint.x, 0f, randomPoint.y);
-            Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+           // var coinToss = Random.Range(0, 2);
+           // if (coinToss == 0)
+                Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
         }
     }
 }
