@@ -51,7 +51,7 @@ public class LeaderBoardManager : MonoBehaviour
 
     #region LEADER BOARD
 
-    private const string PublicLeaderBoardKey = "a92682080da1ed9f3b0f0b46e5fd441d0a00d8edffbf4a403f23c0f233f30180";
+    private const string PublicLeaderBoardKey = "b73c868d96e2d6f34643292011e55b954a74d7b0a90cc847c16b7a591ae411b4\n";
 
     private void GetLeaderBoard()
     {
