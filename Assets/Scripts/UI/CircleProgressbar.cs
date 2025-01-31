@@ -12,8 +12,7 @@ public class CircleProgressbar : MonoBehaviour
     [SerializeField] private Image indicatorImageUI;
     [SerializeField] private KeyCode selectedKey = KeyCode.Mouse0;
     [SerializeField] private UnityEvent onIndicator;
-
-    private bool shouldUpdate = false;
+    
 
     void Awake()
     {
@@ -25,7 +24,6 @@ public class CircleProgressbar : MonoBehaviour
         if(!enabled) return;
         if (Input.GetKey(selectedKey))
         {
-            shouldUpdate = false;
             indicatorTimer += Time.deltaTime * keyHoldFillSpeed;
         }
         else
@@ -42,11 +40,6 @@ public class CircleProgressbar : MonoBehaviour
             indicatorImageUI.fillAmount = 0f;
             indicatorImageUI.enabled = false;
             onIndicator.Invoke();
-        }
-
-        if (Input.GetKeyUp(selectedKey))
-        {
-            shouldUpdate = true;
         }
     }
 }
