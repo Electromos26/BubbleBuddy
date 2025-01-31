@@ -27,8 +27,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7683277006771036450}
   m_Father: {fileID: 8577373631386798068}
@@ -48,17 +48,17 @@ MonoBehaviour:
   duration: 0.5
   ease: 31
   <ShrinkSizes>k__BackingField:
-  - 0.4
-  - 0.5
-  - 0.6
-  - 0.75
-  - 1
+  - 0.45
+  - 0.55
+  - 0.7
+  - 0.85
+  - 1.1
   <ShrinkSpeeds>k__BackingField:
-  - 15
+  - 20
+  - 18
+  - 16
   - 14
-  - 13
   - 12
-  - 10
 --- !u!1 &2236716863109483320
 GameObject:
   m_ObjectHideFlags: 0

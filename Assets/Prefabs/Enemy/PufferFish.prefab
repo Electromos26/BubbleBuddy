@@ -138,7 +138,7 @@ MonoBehaviour:
   Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
   damage: 1000
   maxHealth: 1
-  speed: 7
+  speed: 8
   <Points>k__BackingField: 100
   deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
   spawnRadius: 3
   chargeUp: {fileID: 8108493521628858268, guid: 13cfb1f3adf00a54887e89552a4d11c3, type: 3}
   scaleStrength: 1
-  duration: 2
+  duration: 1
   explodeEffect: {fileID: 2910635792451731281, guid: e3b951bec7f7143bb84123f67cfbbeef, type: 3}
   popSound: {fileID: 8300000, guid: 9acc132786657e74eacc2b1754addcef, type: 3}
 --- !u!114 &4192836861328482876
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 867921036275047180}
-  attackRange: 6
+  attackRange: 4
 --- !u!58 &4760420979721881556
 CircleCollider2D:
   m_ObjectHideFlags: 0

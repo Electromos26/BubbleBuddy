@@ -15,11 +15,11 @@ MonoBehaviour:
   <Acceleration>k__BackingField: 50
   <Deceleration>k__BackingField: 2
   <DashForce>k__BackingField: 400
-  <MaxSpeed>k__BackingField: 10
+  <MaxSpeed>k__BackingField: 12
   <MaxHealth>k__BackingField: 100
-  <DepletionRate>k__BackingField: 5
-  <AttackCooldown>k__BackingField: 0.5
-  <DashCooldown>k__BackingField: 0.5
+  <DepletionRate>k__BackingField: 3
+  <AttackCooldown>k__BackingField: 0.1
+  <DashCooldown>k__BackingField: 3
   <MaxBubbleBulletAmount>k__BackingField: 10
   <BubbleBulletPrefab>k__BackingField: {fileID: 1623408761294305840, guid: 1a9a81abccb1ade4a9e8dc3df7922738, type: 3}
   <ArrowFollowSpeed>k__BackingField: 7.5

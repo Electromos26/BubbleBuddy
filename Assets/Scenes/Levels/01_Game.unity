@@ -253,10 +253,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PufferFish
       objectReference: {fileID: 0}
-    - target: {fileID: 6566833420355070742, guid: 3ef54fa6b759c834eb283087a672f05c, type: 3}
-      propertyPath: damage
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26375,6 +26371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyDummy
       objectReference: {fileID: 0}
+    - target: {fileID: 6858814246104777067, guid: 7a740b4b68d660c4d93250b6c6d8f6eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26838,11 +26838,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6268002187059522484, guid: 41b52776174aec94fbebf0002e2258c0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0823822
+      value: -13.24
       objectReference: {fileID: 0}
     - target: {fileID: 6268002187059522484, guid: 41b52776174aec94fbebf0002e2258c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.412413
+      value: -14.19
       objectReference: {fileID: 0}
     - target: {fileID: 6268002187059522484, guid: 41b52776174aec94fbebf0002e2258c0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27704,6 +27704,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2275768173455875248, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
+      propertyPath: '<ShrinkSpeeds>k__BackingField.Array.data[4]'
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2487237115763283251, guid: 7e5e7072438325f438e8e94a63320998, type: 3}
       propertyPath: m_Name
       value: Player
@@ -27773,9 +27777,9 @@ SceneRoots:
   - {fileID: 27135043}
   - {fileID: 1332734197}
   - {fileID: 2036298056}
-  - {fileID: 193974739}
   - {fileID: 1803620459}
+  - {fileID: 193974739}
+  - {fileID: 2423010163265315418}
   - {fileID: 1241336494}
   - {fileID: 325493758}
-  - {fileID: 2423010163265315418}
   - {fileID: 355177020}
