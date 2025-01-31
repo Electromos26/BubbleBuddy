@@ -1,5 +1,6 @@
 using Dan.Main;
 using Dan.Models;
+using Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

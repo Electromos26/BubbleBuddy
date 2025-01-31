@@ -43,7 +43,7 @@ namespace Enemy
                 Detector.Player.GetDamaged(damage);
                 Detector.PlayerInRange = false;
             }
-
+            Event.OnEnemyDied?.Invoke(this);
             ChangeState(DeathState);
         }
 

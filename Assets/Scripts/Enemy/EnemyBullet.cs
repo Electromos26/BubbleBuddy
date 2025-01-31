@@ -31,6 +31,7 @@ namespace Enemy
         
             public void Init(Vector2 dir)
             {
+                dir = dir.normalized;
                 _rb.AddForce(dir * speed, ForceMode2D.Impulse);
                 _bulletTween = transform.DOShakeScale(shakeDuration, shakeStrength).SetDelay(shakeDelay);
             }

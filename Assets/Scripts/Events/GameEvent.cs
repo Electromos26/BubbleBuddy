@@ -1,21 +1,25 @@
+using Enemy;
 using UnityEngine;
 using UnityEngine.Events;
-using Enemy;
-using UnityEngine.SocialPlatforms.Impl;
 
-[CreateAssetMenu(fileName = "GameEvent", menuName = "GameSO/GameEvent", order = 0)]
-public class GameEvent : ScriptableObject
+namespace Events
 {
-    public UnityAction<EnemyBase> OnEnemyDied;
+    [CreateAssetMenu(fileName = "GameEvent", menuName = "GameSO/GameEvent", order = 0)]
+    public class GameEvent : ScriptableObject
+    {
+        public UnityAction<EnemyBase> OnEnemyDied;
         
-    public UnityAction<float> OnPlayerHealthChange;
+        public UnityAction<float> OnPlayerHealthChange;
     
-    public UnityAction OnPlayerHit;
-    public UnityAction OnPlayerDeath;
+        public UnityAction OnPlayerHit;
+        public UnityAction OnPlayerDeath;
 
-    public UnityAction EndGame;
+        public UnityAction OnGameStart;
+        public UnityAction OnEndGame;
     
-    public UnityAction<int> FinalScore;
+        public UnityAction OnWaveStart;
+        public UnityAction OnWaveEnd;
 
-    public int Score;
+        public int Score;
+    }
 }

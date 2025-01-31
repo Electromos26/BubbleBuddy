@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Enemy.States;
+using Events;
 using UnityEngine;
 using Managers;
 using Utilities;

@@ -1,5 +1,6 @@
 using System;
 using Enemy;
+using Events;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -13,40 +14,40 @@ namespace UI
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI highScoreText;
 
-        public int Score;
-        public int HighScore;
+        private int _score;
+        private int _highScore;
 
         private void Awake()
         {
-            Score = 0;
-            PlayerPrefs.GetInt("HighScore", HighScore);
+            _score = 0;
+            PlayerPrefs.GetInt("HighScore", _highScore);
             
-            scoreText.text = Score.ToString();
-            highScoreText.text = HighScore.ToString();
+            scoreText.text = _score.ToString();
+            highScoreText.text = _highScore.ToString();
         }
 
         private void OnEnable()
         {
             Event.OnEnemyDied += SetScore;
-            Event.EndGame += SetScore;
+            Event.OnEndGame += SetScore;
         }
 
-        public void SetScore()
+        private void SetScore()
         {
-            Event.FinalScore?.Invoke(Score);
+            Event.Score = _score;
         }
 
 
         private void SetScore(EnemyBase score)
         {
-            Score += (int)score.Points;
-            Event.Score = Score;
-            scoreText.text = Score.ToString();
+            _score += (int)score.Points;
+            Event.Score = _score;
+            scoreText.text = _score.ToString();
 
-            if (Score < HighScore || HighScore >= PlayerPrefs.GetInt("HighScore")) return;
+            if (_score < _highScore || _highScore >= PlayerPrefs.GetInt("HighScore")) return;
             
-            HighScore = Score;
-            PlayerPrefs.SetInt("HighScore", HighScore);
+            _highScore = _score;
+            PlayerPrefs.SetInt("HighScore", _highScore);
         }
         
     }

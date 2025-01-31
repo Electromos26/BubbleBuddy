@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using Events;
 using Managers;
 
 namespace Player
@@ -51,7 +52,7 @@ namespace Player
         
         public void HandleDeathAnimation()
         {
-            Event.EndGame?.Invoke();
+            Event.OnEndGame?.Invoke();
             //AudioManager.Instance.PlayAudioSfx(dieSfx);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
             transform.DOScale(Vector3.zero, duration);

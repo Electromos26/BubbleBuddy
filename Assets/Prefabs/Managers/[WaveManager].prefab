@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1296136158298367206
+--- !u!1 &3797546630478734271
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7501914036027573518}
-  - component: {fileID: 6024758656663432786}
+  - component: {fileID: 1445600507147812284}
+  - component: {fileID: 2554899483415624449}
   m_Layer: 0
-  m_Name: '[SpawnManager]'
+  m_Name: '[WaveManager]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7501914036027573518
+--- !u!4 &1445600507147812284
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296136158298367206}
+  m_GameObject: {fileID: 3797546630478734271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 137.15536, y: 69.716194, z: 2.1474833}
+  m_LocalPosition: {x: 662.24664, y: 104.94261, z: -5.7854266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6024758656663432786
+--- !u!114 &2554899483415624449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296136158298367206}
+  m_GameObject: {fileID: 3797546630478734271}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2892c35c25686ef48b194dd54cc8ccdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 19ec07df7ea5d404c8cc98a58f3dccff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <IsPersistent>k__BackingField: 0
-  bubbleDelayMin: 1
-  bubbleDelayMax: 3
+  Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
+  waveBannerAnimator: {fileID: 0}
+  waveText: {fileID: 0}
+  waveBreakInterval: 5
+  spawnRate: 1

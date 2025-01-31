@@ -1,4 +1,5 @@
 using System;
+using Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,12 +13,12 @@ public class EndGame : MonoBehaviour
 
    private void OnEnable()
    {
-      Event.FinalScore += EndGameUI;
+      //Event.FinalScore += EndGameUI;
    }
 
    private void OnDisable()
    {
-      Event.FinalScore -= EndGameUI;
+     // Event.FinalScore -= EndGameUI;
    }
 
    private void Start()

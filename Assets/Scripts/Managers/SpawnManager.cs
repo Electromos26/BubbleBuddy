@@ -8,11 +8,13 @@ namespace Managers
 {
     public class SpawnManager : Singleton<SpawnManager>
     {
-        [SerializeField] private float delay = 2f;
-
+        [SerializeField][Min(0.1f)] private float bubbleDelayMin = 2f;
+        [SerializeField][Min(1f)] private float bubbleDelayMax = 5f;
+        
+        private float delay;
         private void Start()
         {
-            delay = Random.Range(1f, delay);
+            delay = Random.Range(bubbleDelayMin, bubbleDelayMax);
         }
         
 
