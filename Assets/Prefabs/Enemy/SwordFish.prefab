@@ -283,8 +283,6 @@ MonoBehaviour:
   deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 50
-  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
-  spawnRadius: 2
   chargeUp: {fileID: 2972185808495899356, guid: 12b5efcaa5c07d944825de3f90f26108, type: 3}
   stunTime: 2
   lookSpeed: 2
@@ -294,7 +292,9 @@ MonoBehaviour:
   dash: {fileID: 6741439283810281840, guid: 8149e89a4b6078e429985ebce126d014, type: 3}
   follow: {fileID: 8700532501878500283, guid: 58dd3b64d62452e4c9a966c18a87390f, type: 3}
   stun: {fileID: -5986512075459692379, guid: 984b4c82232e0f54894072cd585b16f1, type: 3}
-  slashSound: {fileID: 8300000, guid: 2c2649b16fa45274fb3e9cf2b997d742, type: 3}
+  slashSound:
+  - {fileID: 8300000, guid: 765ca15aedb504546829b1aa41bad70e, type: 3}
+  - {fileID: 8300000, guid: 1362ffcbb4aa5da45abc892adef4f7ba, type: 3}
 --- !u!114 &6532875549440044825
 MonoBehaviour:
   m_ObjectHideFlags: 0

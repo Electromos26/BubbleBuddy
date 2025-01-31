@@ -17,8 +17,8 @@ namespace Enemy
         [SerializeField] private float shootDelay;
         [SerializeField] private float chargeDuration;
         [SerializeField] private Ease ease = Ease.Flash;
-        [SerializeField] private float chargeScale = 1.5f; 
-        
+        [SerializeField] private float chargeScale = 1.5f;
+
         [SerializeField] private AudioClip[] pewSounds;
 
         private Tween _chargeTween;
@@ -42,14 +42,15 @@ namespace Enemy
         public override void AttackPlayer()
         {
             _spriteRenderer.flipX = Detector.GetPlayerDirection().x > 0;
-            
+
             _spriteRenderer.sprite = shoot;
             IsAttacking = true;
 // Get player direction
             Vector2 playerDirection = Detector.GetPlayerDirection();
 
 // Shoot bullet
-            AudioManager.Instance.PlayAudioSfx(pewSounds[Random.Range(0, pewSounds.Length)]);
+            if (AudioManager.Instance)
+                AudioManager.Instance.PlayAudioSfx(pewSounds[Random.Range(0, pewSounds.Length)]);
 
             var bullet = Instantiate(enemyBullet, shootPoint.position, Quaternion.identity);
             bullet.Init(playerDirection);
@@ -62,7 +63,6 @@ namespace Enemy
                     ChangeState(ChaseState);
                     IsAttacking = false;
                 });
-
         }
 
         private void OnDestroy()

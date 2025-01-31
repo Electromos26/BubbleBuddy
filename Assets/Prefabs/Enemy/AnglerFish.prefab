@@ -175,8 +175,6 @@ MonoBehaviour:
   deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 20
-  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
-  spawnRadius: 2
   chargeUp: {fileID: 7686912274190573737, guid: b384bbd224cbb3a40940c54597aef884, type: 3}
   shoot: {fileID: 3406330417689992111, guid: e43112b2c5fca1e41a5efb46ca30b501, type: 3}
   normal: {fileID: -1471403381867859206, guid: 89dc61b072910864097fbd2802ac5ae6, type: 3}
@@ -186,6 +184,9 @@ MonoBehaviour:
   chargeDuration: 0.8
   ease: 11
   chargeScale: 1.25
+  pewSounds:
+  - {fileID: 8300000, guid: 157b39c354d17ac499343b9808c0b7aa, type: 3}
+  - {fileID: 8300000, guid: 78729464c52bab24a8798ebbf8eb87a5, type: 3}
 --- !u!114 &7629429899544016410
 MonoBehaviour:
   m_ObjectHideFlags: 0

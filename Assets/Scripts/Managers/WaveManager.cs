@@ -69,8 +69,6 @@ namespace Managers
         private void SpawnWaveEnemy()
         {
             if (CurrentEnemyPerWave <= 0 || _spawnedEnemyCount == CurrentEnemyPerWave) return;
-
-            Debug.Log("Spawning Enemy: " + _spawnedEnemyCount);
             
             if (!_spawnTimer.IsFinished) return;
             
@@ -85,7 +83,6 @@ namespace Managers
         {
             CurrentWave++;
             CurrentEnemyPerWave = (int)(baseEnemyCount + Mathf.Pow(CurrentWave, scalingFactor));
-            Debug.Log($"Wave: {CurrentWave} Enemy Count: {CurrentEnemyPerWave}");
             
             waveText.text = $"Wave: {CurrentWave}";
             waveBannerAnimator.FadeInAnimate(true);

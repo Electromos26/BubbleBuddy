@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using Utilities;
 
@@ -34,6 +35,8 @@ namespace Player.States
             _cooldownTimer.Reset(PlayerStats.AttackCooldown); //timer logic 
             _cooldownTimer.Start();
 
+            AudioManager.Instance.PlayAudioSfx(Player.popShoot[Random.Range(0, Player.popShoot.Length)]);
+            
             Player.Bobber.Shake(); //Shoot Effect on player
 
             Player.SpawnBullet();

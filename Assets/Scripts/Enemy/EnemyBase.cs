@@ -21,10 +21,8 @@ namespace Enemy
         protected ParticleSystem deathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
-        
+
         [SerializeField] protected Sprite chargeUp;
-        
-        [SerializeField] protected AudioClip deathSound;
 
 
         public EnemyChaseState ChaseState;
@@ -42,8 +40,7 @@ namespace Enemy
         public bool ChargeUpFinished { get; protected set; }
         public bool IsHit { get; private set; }
         public bool IsAttacking { get; set; }
-        
-        
+
 
         protected SpriteRenderer _spriteRenderer;
         protected float _currentHealth;
@@ -92,19 +89,15 @@ namespace Enemy
             {
                 collider.enabled = false;
             }
+
             transform.DOKill(); // Kill any existing tweens
 
             if (deathEffect)
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
             
-            AudioManager.Instance.PlayAudioSfx(deathSound);
-
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
-                .OnComplete(() =>
-                {
-                    Destroy(gameObject, 2f);
-                });
+                .OnComplete(() => { Destroy(gameObject, 2f); });
         }
 
 
@@ -150,7 +143,7 @@ namespace Enemy
                 }
             });
         }
-        
+
 
         public virtual void SetSpriteNormal()
         {

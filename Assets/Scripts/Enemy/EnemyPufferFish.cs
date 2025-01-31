@@ -35,15 +35,15 @@ namespace Enemy
 
             if (explodeEffect)
                 Instantiate(explodeEffect, transform.position, Quaternion.identity);
-
-            AudioManager.Instance.PlayAudioSfx(popSound);
+            if (AudioManager.Instance)
+                AudioManager.Instance.PlayAudioSfx(popSound);
 
             if (Detector.PlayerInRange && Detector.Player != null)
             {
                 Detector.Player.GetDamaged(damage);
                 Detector.PlayerInRange = false;
             }
-            
+
             Event.OnEnemyDied?.Invoke(this);
             ChangeState(DeathState);
         }

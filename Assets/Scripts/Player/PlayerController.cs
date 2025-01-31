@@ -19,8 +19,7 @@ namespace Player
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
 
-        [SerializeField] private AudioClip popShoot; 
-        [SerializeField] private AudioClip death;
+        [SerializeField] public AudioClip[] popShoot; 
 
         public PlayerMoveState MoveState;
         public PlayerAttackState AttackState;

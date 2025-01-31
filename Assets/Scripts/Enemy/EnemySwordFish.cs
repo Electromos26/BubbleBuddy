@@ -58,13 +58,13 @@ namespace Enemy
         {
             // Get the direction to the player
             var direction = Detector.GetPlayerDirection();
-        
+
             // Calculate the angle in degrees
             float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        
+
             // Create the target rotation
             var targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
-        
+
             // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * lookSpeed);
         }
@@ -79,7 +79,8 @@ namespace Enemy
                 .SetDelay(jumpDelay)
                 .OnComplete(() =>
                 {
-                    AudioManager.Instance.PlayAudioSfx(slashSound[Random.Range(0, slashSound.Length)]);
+                    if (AudioManager.Instance)
+                        AudioManager.Instance.PlayAudioSfx(slashSound[Random.Range(0, slashSound.Length)]);
                     IsAttacking = false;
                     ChangeState(StunState);
                     _spriteRenderer.sprite = stun;

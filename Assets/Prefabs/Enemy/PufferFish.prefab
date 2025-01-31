@@ -143,13 +143,11 @@ MonoBehaviour:
   deathEffect: {fileID: 2986241298478599020, guid: 6a0005efcef059743821a6bd900fa372, type: 3}
   hitDuration: 1
   hitStrength: 10
-  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
-  spawnRadius: 3
   chargeUp: {fileID: 8108493521628858268, guid: 13cfb1f3adf00a54887e89552a4d11c3, type: 3}
   scaleStrength: 1
   duration: 1
   explodeEffect: {fileID: 2910635792451731281, guid: e3b951bec7f7143bb84123f67cfbbeef, type: 3}
-  popSound: {fileID: 8300000, guid: 9acc132786657e74eacc2b1754addcef, type: 3}
+  popSound: {fileID: 8300000, guid: 87110553493c57640978a3852652f4ee, type: 3}
 --- !u!114 &4192836861328482876
 MonoBehaviour:
   m_ObjectHideFlags: 0
