@@ -2658,7 +2658,7 @@ MonoBehaviour:
   userNameInput: {fileID: 1214629957}
   submitButton: {fileID: 586673793}
   minNameLength: 3
-  maxNameLength: 7
+  maxNameLength: 12
   loadingImage: {fileID: 2071578158}
   leaderBoardNameBox: {fileID: 269576666}
   personalRank: {fileID: 1215906590}
