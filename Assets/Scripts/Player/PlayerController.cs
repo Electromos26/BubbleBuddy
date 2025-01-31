@@ -52,6 +52,9 @@ namespace Player
             DashTimer = new CountdownTimer(PlayerStats.DashCooldown);
             DashTimer.Start();
             AttackTimer.Start();
+            
+            PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
+            CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
 
             _currentHealth = PlayerStats.MaxHealth;
 
@@ -125,8 +128,7 @@ namespace Player
 
             // Handle shrink based on current bar
             PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
-            
-            
+            CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
 
             Event.OnPlayerHealthChange(_currentHealth);
             Event.OnPlayerHit.Invoke();
@@ -154,6 +156,7 @@ namespace Player
 
             // Handle shrink based on current bar
             PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
+            CurrentSpeed = PlayerShrinker.GetCurrentSpeed();
 
             Event.OnPlayerHealthChange(_currentHealth);
 
