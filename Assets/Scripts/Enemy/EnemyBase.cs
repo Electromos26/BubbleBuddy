@@ -22,6 +22,8 @@ namespace Enemy
 
         [SerializeField] protected BubbleCollectible bubbleCollectableDrop;
         [SerializeField] protected float spawnRadius = 2f;
+        
+        [SerializeField] protected Sprite chargeUp;
 
 
         public EnemyChaseState ChaseState;
@@ -39,6 +41,8 @@ namespace Enemy
         public bool ChargeUpFinished { get; protected set; }
         public bool IsHit { get; private set; }
         public bool IsAttacking { get; set; }
+        
+        
 
         protected SpriteRenderer _spriteRenderer;
         protected float _currentHealth;

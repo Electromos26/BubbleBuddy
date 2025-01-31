@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using Player.States;
 using UI;
@@ -124,6 +125,8 @@ namespace Player
 
             // Handle shrink based on current bar
             PlayerShrinker.HandleShrinkBasedOnBar(CalculateCurrentBar());
+            
+            
 
             Event.OnPlayerHealthChange(_currentHealth);
             Event.OnPlayerHit.Invoke();

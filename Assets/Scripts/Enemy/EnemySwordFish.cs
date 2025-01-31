@@ -20,7 +20,7 @@ namespace Enemy
         [SerializeField] private float jumpDelay;
 
 
-        [SerializeField] private Sprite dash, chargeUp, follow, stun;
+        [SerializeField] private Sprite dash, follow, stun;
 
         [SerializeField] private AudioClip slashSound;
 
@@ -57,31 +57,15 @@ namespace Enemy
         {
             // Get the direction to the player
             var direction = Detector.GetPlayerDirection();
-
-            float targetAngle = 0;
-            if (direction.y > 0.5f && Mathf.Abs(direction.x) < 0.5f ||
-                direction.y < -0.5f && Mathf.Abs(direction.x) < 0.5f)
-            {
-                targetAngle = -90f;
-            }
-            else if (direction.x > 0.5f && Mathf.Abs(direction.y) < 0.5f ||
-                     direction.x < -0.5f && Mathf.Abs(direction.y) < 0.5f)
-            {
-                targetAngle = 0f;
-            }
-            else if (direction.x < 0 && direction.y > 0 || direction.x > 0 && direction.y < 0)
-            {
-                targetAngle = -30f;
-            }
-            else if (direction.x < 0 && direction.y < 0 || direction.x > 0 && direction.y > 0)
-            {
-                targetAngle = 30f;
-            }
-
-
+        
+            // Calculate the angle in degrees
+            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        
+            // Create the target rotation
             var targetRotation = Quaternion.Euler(0f, 0f, targetAngle);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation,
-                Time.fixedDeltaTime * lookSpeed);
+        
+            // Smoothly rotate towards the target rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * lookSpeed);
         }
 
         public override void AttackPlayer()

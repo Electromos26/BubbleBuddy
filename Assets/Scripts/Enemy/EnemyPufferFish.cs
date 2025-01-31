@@ -22,6 +22,7 @@ namespace Enemy
         {
             if (_spriteRenderer != null)
             {
+                _spriteRenderer.sprite = chargeUp;
                 _chargeTween = _spriteRenderer.transform.DOShakePosition(duration, scaleStrength)
                     .OnComplete(() => { ChargeUpFinished = true; });
             }
