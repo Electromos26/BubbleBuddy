@@ -55,6 +55,7 @@ namespace Player
         public void Shake()
         {
             _shakeTween?.Kill();
+            transform.localScale = Vector3.one;
            _shakeTween = transform.DOShakeScale(shakeDuration, shakeStrength);
         }
     }

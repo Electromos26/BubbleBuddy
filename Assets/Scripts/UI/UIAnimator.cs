@@ -43,6 +43,7 @@ public class UIAnimator : MonoBehaviour
 
     public void MoveAnimate()
     {
+        currentTween?.Kill();
         if (currentTween.IsActive())
             return;
 
