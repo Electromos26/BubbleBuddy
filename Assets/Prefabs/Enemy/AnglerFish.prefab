@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCollider: {fileID: 232256591735677496}
-  attackRange: 12
+  attackRange: 15
 --- !u!58 &3901952189929101286
 CircleCollider2D:
   m_ObjectHideFlags: 0
