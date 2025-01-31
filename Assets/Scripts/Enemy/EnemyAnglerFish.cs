@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities;
@@ -17,6 +18,8 @@ namespace Enemy
         [SerializeField] private float chargeDuration;
         [SerializeField] private Ease ease = Ease.Flash;
         [SerializeField] private float chargeScale = 1.5f; 
+        
+        [SerializeField] private AudioClip[] pewSounds;
 
         private Tween _chargeTween;
         private Tween _shootTween;
@@ -46,6 +49,8 @@ namespace Enemy
             Vector2 playerDirection = Detector.GetPlayerDirection();
 
 // Shoot bullet
+            AudioManager.Instance.PlayAudioSfx(pewSounds[Random.Range(0, pewSounds.Length)]);
+
             var bullet = Instantiate(enemyBullet, shootPoint.position, Quaternion.identity);
             bullet.Init(playerDirection);
 
@@ -58,7 +63,6 @@ namespace Enemy
                     IsAttacking = false;
                 });
 
-            // AudioManager.Instance.PlayAudioSfx(slashSound);
         }
 
         private void OnDestroy()

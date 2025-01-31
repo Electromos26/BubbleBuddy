@@ -31615,6 +31615,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3732863203723232327, guid: c5d1fe85b5d77514eb4eacdd70daea59, type: 3}
   m_PrefabInstance: {fileID: 1823973973}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &658611025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5247247323253711002, guid: 04374efbccfe4414bbc9a0e88fd9e910, type: 3}
+  m_PrefabInstance: {fileID: 6576536339960974524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c6737f6db65984bb045ae89318f33a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &868940049
 GameObject:
   m_ObjectHideFlags: 0
@@ -31659,14 +31670,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 128105341015946008, guid: 3990b401c82016e408214e0ac760a322, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1081
-      objectReference: {fileID: 0}
-    - target: {fileID: 164444349217343265, guid: 3990b401c82016e408214e0ac760a322, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 9f9014a97dfe9284881e3628ccef7c04, type: 3}
     - target: {fileID: 350329408086803423, guid: 3990b401c82016e408214e0ac760a322, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -31675,6 +31678,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2305307789411946224, guid: 3990b401c82016e408214e0ac760a322, type: 3}
+      propertyPath: OnAnimateFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 658611025}
     - target: {fileID: 2998789575672564158, guid: 3990b401c82016e408214e0ac760a322, type: 3}
       propertyPath: m_Name
       value: '[ParentCanvas]------'

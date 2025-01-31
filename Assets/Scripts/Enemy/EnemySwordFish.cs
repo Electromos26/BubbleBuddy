@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Enemy
 {
@@ -22,7 +23,7 @@ namespace Enemy
 
         [SerializeField] private Sprite dash, follow, stun;
 
-        [SerializeField] private AudioClip slashSound;
+        [SerializeField] private AudioClip[] slashSound;
 
         private Tween _jumpTween;
         private Camera cam;
@@ -78,7 +79,7 @@ namespace Enemy
                 .SetDelay(jumpDelay)
                 .OnComplete(() =>
                 {
-                   // AudioManager.Instance.PlayAudioSfx(slashSound);
+                    AudioManager.Instance.PlayAudioSfx(slashSound[Random.Range(0, slashSound.Length)]);
                     IsAttacking = false;
                     ChangeState(StunState);
                     _spriteRenderer.sprite = stun;

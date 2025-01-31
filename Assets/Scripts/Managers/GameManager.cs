@@ -13,21 +13,19 @@ namespace Managers
         private void OnEnable()
         {
             Event.OnEndGame += End;
-            blackScreenAnimator.OnAnimateFinished.AddListener(SwitchScene);
         }
         
         private void OnDisable()
         {
             Event.OnEndGame -= End;
-            blackScreenAnimator.OnAnimateFinished.RemoveListener(SwitchScene);
         }
         
         private void End()
         {
-            blackScreenAnimator.FadeAnimate();
+            blackScreenAnimator.FadeInAnimate(true);
         }
         
-        private void SwitchScene()
+        public void SwitchScene()
         {
             SceneManager.LoadScene("03_LeaderBoard");
         }

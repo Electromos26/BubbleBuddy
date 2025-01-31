@@ -3,6 +3,7 @@ using Events;
 using UnityEngine;
 using Player.States;
 using UI;
+using UnityEngine.Serialization;
 using Utilities;
 
 namespace Player
@@ -14,12 +15,12 @@ namespace Player
         [field: SerializeField] public PlayerStats PlayerStats { get; private set; }
         [field: SerializeField] public PlayerBobber Bobber { get; private set; }
         [field: SerializeField] public PlayerShrinker PlayerShrinker { get; private set; }
-        [field: SerializeField] public PlayerUIHandler PlayerHealth { get; private set; }
 
         [SerializeField] private Transform pointerArrow;
         [SerializeField] private Transform bubbleSpawnPoint;
 
-        [SerializeField] private AudioClip popShoot;
+        [SerializeField] private AudioClip popShoot; 
+        [SerializeField] private AudioClip death;
 
         public PlayerMoveState MoveState;
         public PlayerAttackState AttackState;

@@ -31,5 +31,5 @@ public class EndMenu : Menu
 
     private void LoadMainMenu() => SceneManager.LoadScene(0);
     
-    private void LoadGameScene() => SceneManager.LoadScene(1);
+    private void LoadGameScene() => SceneManager.LoadScene(2);
 }

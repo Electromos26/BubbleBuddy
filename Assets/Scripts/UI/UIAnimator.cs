@@ -164,6 +164,7 @@ public class UIAnimator : MonoBehaviour
         {
             currentTween.Kill();
             isFadeChanged = fade;
+            OnAnimateFinished.Invoke();
         });
 
     }

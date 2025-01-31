@@ -1,45 +1,51 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
-using Utils;
-
-namespace Managers
-{
-    [RequireComponent(typeof(AudioSource))]
-    public class AudioManager : Singleton<AudioManager>
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityEngine.Audio;
+    using Utils;
+    
+    namespace Managers
     {
-        [SerializeField] private AudioMixer mixer;
-
-        [SerializeField] private AudioMixerGroup masterGroup;
-        [SerializeField] private AudioMixerGroup sfxGroup;
-        [SerializeField] private AudioMixerGroup musicGroup;
-
-        private AudioSource audioSource;
-        private List<AudioSource> availableSources = new List<AudioSource>();
-
-        private void Start()
+        [RequireComponent(typeof(AudioSource))]
+        public class AudioManager : Singleton<AudioManager>
         {
-           availableSources.Add(GetComponentInChildren<AudioSource>());
-        }
-
-        public void PlayAudioSfx(AudioClip clip)
-        {
-            var speaker = GetAudioSource();
-            speaker.PlayOneShot(clip);
-        }
-
-        private AudioSource GetAudioSource()
-        {
-            if (availableSources.Count == 0)
+            [SerializeField] private AudioMixer mixer;
+    
+            [SerializeField] private AudioMixerGroup masterGroup;
+            [SerializeField] private AudioMixerGroup sfxGroup;
+            [SerializeField] private AudioMixerGroup musicGroup;
+    
+            private AudioSource _audioSource;
+            private readonly List<AudioSource> _availableSources = new ();
+    
+            private void Start()
             {
-                var newAudio = Instantiate(audioSource, Vector3.zero, Quaternion.identity);
-                newAudio.transform.SetParent(transform);
-                availableSources.Add(newAudio);
-                return newAudio;
-                
+                _audioSource = GetComponent<AudioSource>();
+                _availableSources.Add(_audioSource);
             }
-            return availableSources[0];
+    
+            public void PlayAudioSfx(AudioClip clip)
+            {
+                var speaker = GetAudioSource();
+                speaker.PlayOneShot(clip);
+            }
+    
+            private AudioSource GetAudioSource()
+            {
+                if (_availableSources.Count > 0)
+                {
+                    for (var index = 0; index < _availableSources.Count; index++)
+                    {
+                        var source = _availableSources[index];
+                        if (!source.isPlaying)
+                        {
+                            return source;
+                        }
+                    }
+                }
+    
+                var newSource = Instantiate(_audioSource, transform);
+                _availableSources.Add(newSource);
+                return newSource;
+            }
         }
     }
-}

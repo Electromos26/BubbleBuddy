@@ -45,5 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsPersistent>k__BackingField: 0
+  Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
   bubbleDelayMin: 1
   bubbleDelayMax: 3
+  bubbleCollectableDrop: {fileID: 5188154347408048801, guid: 521e33e172cea59479b6d80fd5e17897, type: 3}
+  spawnRadius: 2

@@ -3,6 +3,7 @@ using Enemy.States;
 using Events;
 using UnityEngine;
 using Managers;
+using UnityEngine.Serialization;
 using Utilities;
 
 namespace Enemy
@@ -20,11 +21,10 @@ namespace Enemy
         protected ParticleSystem deathEffect;
 
         [SerializeField] protected float hitDuration, hitStrength;
-
-        [SerializeField] protected BubbleCollectible bubbleCollectableDrop;
-        [SerializeField] protected float spawnRadius = 2f;
         
         [SerializeField] protected Sprite chargeUp;
+        
+        [SerializeField] protected AudioClip deathSound;
 
 
         public EnemyChaseState ChaseState;
@@ -96,13 +96,13 @@ namespace Enemy
 
             if (deathEffect)
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
+            
+            AudioManager.Instance.PlayAudioSfx(deathSound);
 
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
                 .OnComplete(() =>
                 {
-                    if (SpawnManager.Instance)
-                        SpawnManager.Instance.SpawnBubble(transform.position, bubbleCollectableDrop, spawnRadius);
                     Destroy(gameObject, 2f);
                 });
         }

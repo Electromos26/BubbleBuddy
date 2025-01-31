@@ -12,9 +12,8 @@ namespace Player
         [SerializeField] private float duration = 0.5f;
 
         [SerializeField] public ParticleSystem deathEffect;
-        
+
         [SerializeField] private AudioClip dieSfx;
-        
 
 
         private SpriteRenderer _spriteRenderer;
@@ -23,7 +22,7 @@ namespace Player
         private Vector2 _previousInput;
         private Tweener _rotateTween;
 
-       
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -49,17 +48,13 @@ namespace Player
 
             _previousInput = input;
         }
-        
+
         public void HandleDeathAnimation()
         {
-            //AudioManager.Instance.PlayAudioSfx(dieSfx);
+            AudioManager.Instance.PlayAudioSfx(dieSfx);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
-            transform.DOScale(Vector3.zero, duration);
-            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo).OnComplete(() =>
-            {
-                Event.OnEndGame?.Invoke();
-            });
+            transform.DOScale(Vector3.zero, duration).OnComplete(() => { Event.OnEndGame?.Invoke(); });
+            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
         }
-        
     }
 }

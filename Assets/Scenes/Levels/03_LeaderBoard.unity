@@ -3195,7 +3195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1666239436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3229,7 +3229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPos: {x: 0, y: 0}
   duration: 2
-  ease: 3
+  ease: 4
   OnAnimateStarted:
     m_PersistentCalls:
       m_Calls: []
