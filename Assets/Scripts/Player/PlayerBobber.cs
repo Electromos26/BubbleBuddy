@@ -58,5 +58,12 @@ namespace Player
             transform.localScale = Vector3.one;
            _shakeTween = transform.DOShakeScale(shakeDuration, shakeStrength);
         }
+
+        private void OnDestroy()
+        {
+            _bobTween?.Kill();
+            _shadowTween?.Kill();
+            _shakeTween?.Kill();
+        }
     }
 }

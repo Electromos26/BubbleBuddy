@@ -20,8 +20,7 @@ namespace Enemy
         [SerializeField] private float chargeScale = 1.5f;
 
         [SerializeField] private AudioClip[] pewSounds;
-
-        private Tween _chargeTween;
+       
         private Tween _shootTween;
 
         public override void SetSpriteNormal()
@@ -33,8 +32,8 @@ namespace Enemy
         {
             _spriteRenderer.sprite = chargeUp;
 
-            _chargeTween?.Kill();
-            _chargeTween = _spriteRenderer.transform.DOScale(chargeScale, chargeDuration)
+            ChargeTween?.Kill();
+            ChargeTween = _spriteRenderer.transform.DOScale(chargeScale, chargeDuration)
                 .SetEase(ease)
                 .OnComplete(() => { ChargeUpFinished = true; });
         }

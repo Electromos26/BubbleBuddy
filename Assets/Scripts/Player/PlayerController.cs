@@ -1,9 +1,8 @@
+using System;
 using DG.Tweening;
 using Events;
 using UnityEngine;
 using Player.States;
-using UI;
-using UnityEngine.Serialization;
 using Utilities;
 
 namespace Player

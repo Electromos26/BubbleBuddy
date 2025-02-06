@@ -10,6 +10,7 @@ public class EndMenu : Menu
 
     private void Awake()
     {
+        Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

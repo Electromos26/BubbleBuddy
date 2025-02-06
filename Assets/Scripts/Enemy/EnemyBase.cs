@@ -35,7 +35,6 @@ namespace Enemy
 
         public PlayerDetector Detector { get; set; }
         public CountdownTimer StunTimer { get; protected set; }
-        protected Tween GetHitTween;
 
         public bool ChargeUpFinished { get; protected set; }
         public bool IsHit { get; private set; }
@@ -48,6 +47,7 @@ namespace Enemy
 
         private Tween _hitTween;
         private Tween _deathTween;
+        protected Tween GetHitTween;
         protected Tween ChargeTween;
         protected Tween AttackTween;
 
@@ -94,7 +94,7 @@ namespace Enemy
 
             if (deathEffect)
                 Instantiate(deathEffect, transform.position, Quaternion.identity);
-            
+
             _deathTween = transform.DOScale(Vector3.zero, 0.2f)
                 .SetEase(Ease.Flash)
                 .OnComplete(() => { Destroy(gameObject, 2f); });
@@ -153,6 +153,7 @@ namespace Enemy
         {
             _hitTween?.Kill();
             _deathTween?.Kill();
+            GetHitTween?.Kill();
             ChargeTween?.Kill();
             AttackTween?.Kill();
         }

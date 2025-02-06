@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -43,10 +44,11 @@ public class UIAnimator : MonoBehaviour
 
     public void MoveAnimate()
     {
-        currentTween?.Kill();
         if (currentTween.IsActive())
             return;
 
+        currentTween?.Kill();
+       
         OnAnimateStarted.Invoke();
 
         if (isPosChanged)
@@ -98,7 +100,6 @@ public class UIAnimator : MonoBehaviour
 
         currentTween.OnComplete(() =>
         {
-            currentTween.Kill();
             isScaleChanged = !isScaleChanged;
             OnAnimateFinished.Invoke();
         });
@@ -144,7 +145,6 @@ public class UIAnimator : MonoBehaviour
 
         currentTween.OnComplete(() =>
         {
-            currentTween.Kill();
             isFadeChanged = !isFadeChanged;
             OnAnimateFinished.Invoke();
         });
@@ -154,16 +154,15 @@ public class UIAnimator : MonoBehaviour
     public void FadeInAnimate(bool fade)
     {
         
-        
         currentTween?.Kill();
+        
         if (fade)
-            currentTween = canvasGroup.DOFade(1, duration).SetEase(ease);
+            currentTween = canvasGroup.DOFade(1, duration).SetEase(ease).SetUpdate(true);
         else
-            currentTween = canvasGroup.DOFade(0, duration).SetEase(ease);
+            currentTween = canvasGroup.DOFade(0, duration).SetEase(ease).SetUpdate(true);
 
         currentTween.OnComplete(() =>
         {
-            currentTween.Kill();
             isFadeChanged = fade;
             OnAnimateFinished.Invoke();
         });
@@ -175,6 +174,8 @@ public class UIAnimator : MonoBehaviour
     {
         if (currentTween.IsActive())
             return;
+        
+        
 
         if (isFadeChanged)
             currentTween = canvasGroup.DOFade(0, duration).SetEase(ease);
@@ -183,7 +184,6 @@ public class UIAnimator : MonoBehaviour
 
         currentTween.OnComplete(() =>
         {
-            currentTween.Kill();
             isFadeChanged = !isFadeChanged;
         });
     }
@@ -192,9 +192,15 @@ public class UIAnimator : MonoBehaviour
     {
         if (currentTween.IsActive())
             return;
+        
+        currentTween?.Kill();
 
         currentTween = rectTransform.DORotate(new Vector3(0, 0, -180), duration).SetEase(ease).SetLoops(-1);
 
     }
 
+    private void OnDestroy()
+    {
+        currentTween?.Kill();
+    }
 }

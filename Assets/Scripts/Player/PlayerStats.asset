@@ -17,7 +17,7 @@ MonoBehaviour:
   <DashForce>k__BackingField: 400
   <MaxSpeed>k__BackingField: 12
   <MaxHealth>k__BackingField: 100
-  <DepletionRate>k__BackingField: 3
+  <DepletionRate>k__BackingField: 10
   <AttackCooldown>k__BackingField: 0.1
   <DashCooldown>k__BackingField: 3
   <MaxBubbleBulletAmount>k__BackingField: 10

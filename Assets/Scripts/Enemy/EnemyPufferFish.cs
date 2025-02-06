@@ -15,23 +15,20 @@ namespace Enemy
         [SerializeField] private GameObject explodeEffect;
 
         [SerializeField] private AudioClip popSound;
-
-        private Tween _chargeTween;
-
+        
         public override void ChargeUpAttack()
         {
             if (_spriteRenderer != null)
             {
                 _spriteRenderer.sprite = chargeUp;
-                _chargeTween = _spriteRenderer.transform.DOShakePosition(duration, scaleStrength)
+                ChargeTween = _spriteRenderer.transform.DOShakePosition(duration, scaleStrength)
                     .OnComplete(() => { ChargeUpFinished = true; });
             }
         }
 
         public override void AttackPlayer()
         {
-            // Kill all existing tweens before state change
-            KillAllTweens();
+           ChargeTween?.Kill();
 
             if (explodeEffect)
                 Instantiate(explodeEffect, transform.position, Quaternion.identity);
@@ -47,11 +44,11 @@ namespace Enemy
             Event.OnEnemyDied?.Invoke(this);
             ChangeState(DeathState);
         }
-
-        private void KillAllTweens()
+        
+        
+        private void OnDestroy()
         {
-            _chargeTween?.Kill();
-            transform.DOKill();
+           ChargeTween?.Kill(); 
         }
     }
 }

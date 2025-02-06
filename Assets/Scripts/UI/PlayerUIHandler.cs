@@ -53,5 +53,10 @@ namespace UI
             _shakeTween?.Kill();
             _shakeTween = transform.DOShakePosition(shakeDuration, shakeStrength);
         }
+
+        private void OnDestroy()
+        {
+            _shakeTween?.Kill();
+        }
     }
 }

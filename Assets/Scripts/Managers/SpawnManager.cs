@@ -11,14 +11,15 @@ namespace Managers
     public class SpawnManager : Singleton<SpawnManager>
     {
         public GameEvent Event;
-        [SerializeField][Min(0.1f)] private float bubbleDelayMin = 2f;
-        [SerializeField][Min(1f)] private float bubbleDelayMax = 5f;
-        
+        [SerializeField] [Min(0.1f)] private float bubbleDelayMin = 2f;
+        [SerializeField] [Min(1f)] private float bubbleDelayMax = 5f;
+
         [SerializeField] private BubbleCollectible bubbleCollectableDrop;
         [SerializeField] private float spawnRadius;
-        
-        
+
+
         private float delay;
+
         private void Start()
         {
             delay = Random.Range(bubbleDelayMin, bubbleDelayMax);
@@ -27,6 +28,11 @@ namespace Managers
         private void OnEnable()
         {
             Event.OnEnemyDied += SpawnBubble;
+        }
+
+        private void OnDisable()
+        {
+            Event.OnEnemyDied -= SpawnBubble;
         }
 
 
@@ -41,9 +47,14 @@ namespace Managers
             yield return new WaitForSeconds(delay);
             var randomPoint = Random.insideUnitCircle * spawnRadius;
             var spawnPosition = spawnPos + new Vector3(randomPoint.x, 0f, randomPoint.y);
-           // var coinToss = Random.Range(0, 2);
-           // if (coinToss == 0)
-                Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+            // var coinToss = Random.Range(0, 2);
+            // if (coinToss == 0)
+            Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+        }
+
+        private void OnDestroy()
+        {
+            StopAllCoroutines();
         }
     }
 }

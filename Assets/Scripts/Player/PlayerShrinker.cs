@@ -37,5 +37,10 @@ namespace Player
         {
             return ShrinkSpeeds[_currentSpeed];
         }
+        
+        private void OnDestroy()
+        {
+            _srinkTween?.Kill();
+        }
     }
 }

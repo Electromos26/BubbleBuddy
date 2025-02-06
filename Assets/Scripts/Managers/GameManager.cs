@@ -22,6 +22,7 @@ namespace Managers
         
         private void End()
         {
+            Time.timeScale = 0;
             blackScreenAnimator.FadeInAnimate(true);
         }
         

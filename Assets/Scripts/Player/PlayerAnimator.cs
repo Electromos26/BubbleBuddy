@@ -20,7 +20,9 @@ namespace Player
         private Vector3 _leftRotation;
         private Vector3 _rightRotation;
         private Vector2 _previousInput;
-        private Tweener _rotateTween;
+        
+        private Tween _rotateTween;
+        private Tween _deathTween;
 
 
         private void Awake()
@@ -39,11 +41,11 @@ namespace Player
             if (input == Vector2.left || input == Vector2.right)
             {
                 _spriteRenderer.flipX = input == Vector2.left;
-                transform.DORotate(input == Vector2.left ? _leftRotation : _rightRotation, duration);
+                _rotateTween = transform.DORotate(input == Vector2.left ? _leftRotation : _rightRotation, duration);
             }
             else if (input == Vector2.up || input == Vector2.down || input == Vector2.zero)
             {
-                transform.DORotate(Vector3.zero, duration);
+                _rotateTween = transform.DORotate(Vector3.zero, duration);
             }
 
             _previousInput = input;
@@ -51,10 +53,17 @@ namespace Player
 
         public void HandleDeathAnimation()
         {
+            _rotateTween?.Kill();
             AudioManager.Instance.PlayAudioSfx(dieSfx);
             Instantiate(deathEffect, transform.position, Quaternion.identity);
-            transform.DOScale(Vector3.zero, duration).OnComplete(() => { Event.OnEndGame?.Invoke(); });
-            transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
+            _deathTween = transform.DOScale(Vector3.zero, duration).OnComplete(() => { Event.OnEndGame?.Invoke(); });
+            _rotateTween = transform.DORotate(Vector3.one, duration).SetLoops(-1, LoopType.Yoyo);
+        }
+        
+        private void OnDestroy()
+        {
+            _rotateTween?.Kill();
+            _deathTween?.Kill();
         }
     }
 }
