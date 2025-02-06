@@ -21,7 +21,7 @@ public class Effects : MonoBehaviour, IPointerEnterHandler , IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         _buttonTween?.Kill();
-        _buttonTween = _buttonTransform.DOScale(1.5f, duration).SetEase(ease).SetUpdate(true);
+        _buttonTween = _buttonTransform.DOScale(1.25f, duration).SetEase(ease).SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -33,7 +33,7 @@ public class Effects : MonoBehaviour, IPointerEnterHandler , IPointerExitHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         _buttonTween?.Kill();
-        _buttonTween = _buttonTransform.DOScale(0.5f, duration).SetEase(ease).SetUpdate(true);
+        _buttonTween = _buttonTransform.DOScale(0.75f, duration * 0.5f).SetEase(ease).SetUpdate(true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -42,4 +42,8 @@ public class Effects : MonoBehaviour, IPointerEnterHandler , IPointerExitHandler
         _buttonTween = _buttonTransform.DOScale(1, duration).SetEase(ease).SetUpdate(true);
     }
 
+    private void OnDestroy()
+    {
+        _buttonTween?.Kill();
+    }
 }
