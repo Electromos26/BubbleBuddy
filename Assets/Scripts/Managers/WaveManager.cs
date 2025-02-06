@@ -82,6 +82,7 @@ namespace Managers
         private void ShowBanner()
         {
             CurrentWave++;
+            SpawnManager.Instance.ReduceSpawnProbability();
             CurrentEnemyPerWave = (int)(baseEnemyCount + Mathf.Pow(CurrentWave, scalingFactor));
             
             waveText.text = $"Wave: {CurrentWave}";

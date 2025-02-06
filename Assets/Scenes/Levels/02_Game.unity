@@ -31403,6 +31403,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[BubbleSpawnManager]'
       objectReference: {fileID: 0}
+    - target: {fileID: 6024758656663432786, guid: 5f58e030f903b7847a739728f6880294, type: 3}
+      propertyPath: spawnProbability
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6024758656663432786, guid: 5f58e030f903b7847a739728f6880294, type: 3}
+      propertyPath: probabilityStartWave
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7501914036027573518, guid: 5f58e030f903b7847a739728f6880294, type: 3}
       propertyPath: m_LocalPosition.x
       value: 137.15536

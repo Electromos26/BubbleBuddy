@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 314d808b3c7215548a4c3a10122c1c21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 68ffe7cfb93baa7419e7392679203ef5, type: 2}
   recoverAmount: 15
+  lifeTime: 10
   bubble: {fileID: 8541857421367150183}
   bobHeight: 0.25
   bobDuration: 1.5

@@ -13,12 +13,18 @@ namespace Managers
         public GameEvent Event;
         [SerializeField] [Min(0.1f)] private float bubbleDelayMin = 2f;
         [SerializeField] [Min(1f)] private float bubbleDelayMax = 5f;
-
+        [SerializeField] private int maxCollectables = 5;
         [SerializeField] private BubbleCollectible bubbleCollectableDrop;
-        [SerializeField] private float spawnRadius;
+
+        [Header("Spawn Settings")] [SerializeField]
+        private float spawnRadius;
+
+        [SerializeField][Range(0.1f,1f)] private float spawnProbability = 0.5f;
+        [SerializeField] private float probabilityStartWave = 5f;
 
 
         private float delay;
+        private int activeCollectables;
 
         private void Start()
         {
@@ -28,11 +34,13 @@ namespace Managers
         private void OnEnable()
         {
             Event.OnEnemyDied += SpawnBubble;
+            Event.OnCollectablePickup += Collected;
         }
 
         private void OnDisable()
         {
             Event.OnEnemyDied -= SpawnBubble;
+            Event.OnCollectablePickup -= Collected;
         }
 
 
@@ -47,9 +55,32 @@ namespace Managers
             yield return new WaitForSeconds(delay);
             var randomPoint = Random.insideUnitCircle * spawnRadius;
             var spawnPosition = spawnPos + new Vector3(randomPoint.x, 0f, randomPoint.y);
-            // var coinToss = Random.Range(0, 2);
-            // if (coinToss == 0)
-            Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+
+            var num = 0f;
+            if (WaveManager.Instance.CurrentWave > probabilityStartWave)
+            {
+                num = Random.value;
+            }
+
+            if (num < spawnProbability && maxCollectables > activeCollectables)
+            {
+                Instantiate(bubbleCollectableDrop, spawnPosition, Quaternion.identity);
+                activeCollectables++;
+            }
+
+            yield return null;
+        }
+
+
+        public void ReduceSpawnProbability()
+        {
+            if (WaveManager.Instance.CurrentWave > probabilityStartWave && spawnProbability > 0.15f)
+                spawnProbability -= 0.05f;
+        }
+        
+        private void Collected()
+        {
+           activeCollectables--;
         }
 
         private void OnDestroy()

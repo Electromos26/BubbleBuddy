@@ -10,6 +10,9 @@ namespace Events
         public UnityAction<EnemyBase> OnEnemyDied;
         
         public UnityAction<float> OnPlayerHealthChange;
+        
+        
+        public UnityAction OnCollectablePickup;
     
         public UnityAction OnPlayerHit;
         public UnityAction OnPlayerDeath;
