@@ -285,7 +285,7 @@ MonoBehaviour:
   hitStrength: 50
   chargeUp: {fileID: 2972185808495899356, guid: 12b5efcaa5c07d944825de3f90f26108, type: 3}
   stunTime: 2
-  lookSpeed: 2
+  lookSpeed: 5
   jumpDistance: 15
   jumpDuration: 0.5
   jumpDelay: 0.8

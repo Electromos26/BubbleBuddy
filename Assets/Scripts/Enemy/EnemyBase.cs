@@ -72,7 +72,7 @@ namespace Enemy
             CurrentState?.FixedUpdateState();
         }
 
-        public void FollowPlayer()
+        public virtual void FollowPlayer()
         {
             transform.position += Detector.GetPlayerDirection() * speed * Time.deltaTime;
 

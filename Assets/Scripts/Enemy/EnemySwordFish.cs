@@ -68,6 +68,16 @@ namespace Enemy
             // Smoothly rotate towards the target rotation
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * lookSpeed);
         }
+        
+        public override void FollowPlayer()
+        {
+            transform.position += Detector.GetPlayerDirection() * speed * Time.deltaTime;
+
+            _spriteRenderer.flipX = true;
+            _spriteRenderer.flipY = Detector.GetPlayerDirection().x < 0;
+            
+        }
+
 
         public override void AttackPlayer()
         {
